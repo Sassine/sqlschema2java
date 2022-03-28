@@ -1,0 +1,1 @@
+# sqlschema2java
