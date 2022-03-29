@@ -3,12 +3,16 @@ package dev.sassine.api.structure.model.java;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class EntityModel {
 
 	private String name;
 	private String pkPolicy;
 	private List<FieldModel> fields = new ArrayList<FieldModel>();
 
+	
 	public FieldModel getFieldForName(final String name) {
 		return fields.stream().filter(fl -> fl.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
 	}
@@ -29,6 +33,12 @@ public class EntityModel {
 		return pkPolicy;
 	}
 	public void setPkPolicy(final String pkPolicy) {
+		this.pkPolicy = pkPolicy;
+	}
+
+	public EntityModel(String name, String pkPolicy) {
+		super();
+		this.name = name;
 		this.pkPolicy = pkPolicy;
 	}
 

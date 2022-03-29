@@ -2,6 +2,9 @@ package dev.sassine.api.structure.model.java;
 
 import static org.apache.commons.text.CaseUtils.toCamelCase;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class FieldModel {
 
 	private static final char CHAR = '_';
@@ -14,6 +17,9 @@ public class FieldModel {
 	private Integer minOccurs;
 	private String maxOccurs;
 
+	public FieldModel(String name) {
+		this.name = name;
+	}
 
 	public String getCamelName() {
 		return toCamelCase(name, false, CHAR);

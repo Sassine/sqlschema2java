@@ -10,7 +10,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import dev.sassine.api.structure.parser.GetSqlQuery;
 import dev.sassine.api.structure.util.Util;
 
 

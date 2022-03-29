@@ -1,5 +1,7 @@
 package dev.sassine.api.structure.parser;
 
+import static java.lang.String.format;
+
 import dev.sassine.api.structure.SqlBaseListener;
 import dev.sassine.api.structure.SqlParser;
 import dev.sassine.api.structure.SqlParser.Any_nameContext;
@@ -30,6 +32,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CreateTableParseListener extends SqlBaseListener {
 
+	private static final String AUTOINCREMENT = "AUTOINCREMENT";
+	private static final String FORMAT_COLUMN_TYPE = "%s %s";
 	private final SqlParser sqlParser;
 	private final Database database;
 
@@ -121,8 +125,8 @@ public class CreateTableParseListener extends SqlBaseListener {
 			if (column.getType() == null) {
 				column.setType(util.unformatSqlName(ctx.getText()));
 			} else {
-				//column.setType(column.getType() + " " + util.unformatSqlName(ctx.getText())); TODO AUTOINCREMENT
-				column.setType(column.getType());
+				String ctxType = !ctx.getText().equals(AUTOINCREMENT) ? util.unformatSqlName(ctx.getText()) : "";
+				column.setType(format(FORMAT_COLUMN_TYPE, column.getType(), ctxType)); 
 			}
 		}
 	}

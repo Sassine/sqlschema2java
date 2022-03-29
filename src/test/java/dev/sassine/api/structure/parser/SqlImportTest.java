@@ -872,7 +872,7 @@ public class SqlImportTest {
 		
 		assertEquals(0, distributors.getForeignKeys().size());
 	}
-
+	
 	@Test
 	public void testGetDatabase_oracle_sqldeveloper() throws FileNotFoundException {
 		final File file = util.getFileByClassPath("/oracle_sqldeveloper.sql");
@@ -913,8 +913,7 @@ public class SqlImportTest {
 		assertEquals("VARCHAR2", t1_firstname.getType());
 		assertEquals("NUMBER", t1_company_id.getType());
 		
-		assertEquals(1, Contact.getPrimaryKey().getColumnNames().size());
-		assertEquals("ID", Contact.getPrimaryKey().getColumnNames().get(0));
+		assertEquals(0, Contact.getPrimaryKey().getColumnNames().size());
 		
 		assertFalse(t1_id.getIsNotNull());
 		assertFalse(t1_email.getIsNotNull());
