@@ -15,6 +15,7 @@ import dev.sassine.api.structure.model.sql.Database;
 import dev.sassine.api.structure.model.sql.ForeignKey;
 import dev.sassine.api.structure.model.sql.TableModel;
 
+
 public class DatabaseToEntitysTest {
 
 	private DatabaseConverter databaseToEntitys = new DatabaseConverter();
@@ -40,7 +41,7 @@ public class DatabaseToEntitysTest {
 		assertEquals(1, entity.getFields().size());
 		final FieldModel id = entity.getFields().get(0);
 		assertEquals("id", id.getName());
-		assertEquals("String", id.getType());
+		assertEquals("Integer", id.getType());
 		assertEquals(true, id.getIsPrimaryKey());
 		assertEquals(false, id.getNullable());
 		assertNull(id.getDefaultValue());
@@ -65,7 +66,7 @@ public class DatabaseToEntitysTest {
 		assertEquals(2, entity.getFields().size());
 		final FieldModel id = entity.getFields().get(0);
 		assertEquals("id", id.getName());
-		assertEquals("String", id.getType());
+		assertEquals("Integer", id.getType());
 		assertEquals(true, id.getIsPrimaryKey());
 		assertEquals(false, id.getNullable());
 		assertNull(id.getDefaultValue());
@@ -126,7 +127,7 @@ public class DatabaseToEntitysTest {
 		assertEquals(2, entity.getFields().size());
 		final FieldModel id = entity.getFields().get(0);
 		assertEquals("id", id.getName());
-		assertEquals("String", id.getType());
+		assertEquals("Integer", id.getType());
 		assertEquals(true, id.getIsPrimaryKey());
 		assertEquals(false, id.getNullable());
 		assertNull(id.getDefaultValue());
@@ -165,7 +166,7 @@ public class DatabaseToEntitysTest {
 		assertEquals(2, entity.getFields().size());
 		final FieldModel id = entity.getFields().get(0);
 		assertEquals("id", id.getName());
-		assertEquals("String", id.getType());
+		assertEquals("Integer", id.getType());
 		assertEquals(true, id.getIsPrimaryKey());
 		assertEquals(false, id.getNullable());
 		assertNull(id.getDefaultValue());
@@ -203,7 +204,7 @@ public class DatabaseToEntitysTest {
 		assertEquals(2, entity.getFields().size());
 		final FieldModel id = entity.getFields().get(0);
 		assertEquals("id", id.getName());
-		assertEquals("String", id.getType());
+		assertEquals("Integer", id.getType());
 		assertEquals(true, id.getIsPrimaryKey());
 		assertEquals(false, id.getNullable());
 		assertNull(id.getDefaultValue());
@@ -241,7 +242,7 @@ public class DatabaseToEntitysTest {
 		assertEquals(2, entity.getFields().size());
 		final FieldModel id = entity.getFields().get(0);
 		assertEquals("id", id.getName());
-		assertEquals("String", id.getType());
+		assertEquals("Integer", id.getType());
 		assertEquals(true, id.getIsPrimaryKey());
 		assertEquals(false, id.getNullable());
 		assertNull(id.getDefaultValue());
@@ -285,7 +286,7 @@ public class DatabaseToEntitysTest {
 		assertEquals(2, entity.getFields().size());
 		final FieldModel id = entity.getFields().get(0);
 		assertEquals("id", id.getName());
-		assertEquals("String", id.getType());
+		assertEquals("Integer", id.getType());
 		assertEquals(true, id.getIsPrimaryKey());
 		assertEquals(false, id.getNullable());
 		assertNull(id.getDefaultValue());
