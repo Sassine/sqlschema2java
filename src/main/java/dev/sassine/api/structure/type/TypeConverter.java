@@ -15,13 +15,13 @@ public class TypeConverter {
 	public static final String TYPE_BOOLEAN = "Boolean";
 	public static final String TYPE_LOCAL_DATE_TIME = "LocalDateTime";
 
-	public void convertTypeFromSQLToEntityStore(final Database database) {
+	public void convertTypeFromSQLToEntityStore(final Database database, boolean isPostgress) {
 		for (final TableModel table : database.getTables()) {
 			for (final Column column : table.getColumnByNames().values()) {
 				if (column.getType() == null) {
 					column.setConvertedType("");
 				} else {
-					column.setConvertedType(convertTypeFromSQLToEntityStore(column.getType(), false));
+					column.setConvertedType(convertTypeFromSQLToEntityStore(column.getType(), isPostgress));
 				}
 			}
 		}

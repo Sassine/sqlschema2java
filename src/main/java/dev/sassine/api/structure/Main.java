@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 public class Main {
 
 	public static void main(final String[] args) throws FileNotFoundException {
-		new Sqlschema2Java().compile();
+		new Sqlschema2Java().compile("",false, false);
 	}
 
 }
