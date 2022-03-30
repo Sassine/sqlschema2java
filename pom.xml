@@ -32,6 +32,29 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<version>1.7.5</version>
+				<configuration>
+					<targetClasses>
+						<param>dev.sassine.api.structure.export.*</param>
+						<param>dev.sassine.api.structure.model.*</param>
+						<param>dev.sassine.api.structure.parser.*</param>
+						<param>dev.sassine.api.structure.type.*</param>
+						<param>dev.sassine.api.structure.util.*</param>
+						<param>dev.sassine.api.structure.validation.*</param>
+					</targetClasses>
+					<targetTests>
+						<param>dev.sassine.api.structure.export.*</param>
+						<param>dev.sassine.api.structure.model.*</param>
+						<param>dev.sassine.api.structure.parser.*</param>
+						<param>dev.sassine.api.structure.type.*</param>
+						<param>dev.sassine.api.structure.util.*</param>
+						<param>dev.sassine.api.structure.validation.*</param>
+					</targetTests>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.antlr</groupId>
 				<artifactId>antlr4-maven-plugin</artifactId>
 				<version>4.3</version>
