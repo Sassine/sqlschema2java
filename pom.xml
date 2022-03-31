@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>sqlschema2java</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>sqlschema2java</name>
+    <packaging>pom</packaging>
+    <groupId>dev.sassine.api</groupId>
 
-	<groupId>dev.sassine.api.structure</groupId>
-	<artifactId>sqlschema2java</artifactId>
-	<version>1.0-SNAPSHOT</version>
 
-	<name>sqlschema2java</name>
-	<description> Auto generate Class DTO, Entity and Repository from SQL Query. </description>
-	<url>https://sassine.dev/</url>
-
-	<properties>
-		<java.version>11</java.version>
-	</properties>
-
-	<developers>
+    <developers>
 		<developer>
 			<name>Sassine El-Asmar</name>
 			<id>sassineasmar</id>
@@ -29,125 +23,11 @@
 		</developer>
 	</developers>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.pitest</groupId>
-				<artifactId>pitest-maven</artifactId>
-				<version>1.7.5</version>
-				<configuration>
-					<targetClasses>
-						<param>dev.sassine.api.structure.export.*</param>
-						<param>dev.sassine.api.structure.model.*</param>
-						<param>dev.sassine.api.structure.parser.*</param>
-						<param>dev.sassine.api.structure.type.*</param>
-						<param>dev.sassine.api.structure.util.*</param>
-						<param>dev.sassine.api.structure.validation.*</param>
-					</targetClasses>
-					<targetTests>
-						<param>dev.sassine.api.structure.export.*</param>
-						<param>dev.sassine.api.structure.model.*</param>
-						<param>dev.sassine.api.structure.parser.*</param>
-						<param>dev.sassine.api.structure.type.*</param>
-						<param>dev.sassine.api.structure.util.*</param>
-						<param>dev.sassine.api.structure.validation.*</param>
-					</targetTests>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.antlr</groupId>
-				<artifactId>antlr4-maven-plugin</artifactId>
-				<version>4.3</version>
-				<executions>
-					<execution>
-						<id>antlr</id>
-						<goals>
-							<goal>antlr4</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.0</version>
-				<configuration>
-					<sql-file>./sql.sql</sql-file>
-					<encoding>UTF-8</encoding>
-					<source>11</source>
-					<target>11</target>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-
-	<dependencies>
-		<dependency>
-			<groupId>org.antlr</groupId>
-			<artifactId>antlr4-runtime</artifactId>
-			<version>4.3</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.burningwave</groupId>
-			<artifactId>core</artifactId>
-			<version>12.47.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.18.22</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-			<version>2.4.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-text</artifactId>
-			<version>1.9</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
-			<version>20140107</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>2.4.2</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
-			<version>2.4.2</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.4.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.10</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
-
+    
+    <modules>
+    	<module>sqlschema2java-core</module>
+    	<module>sqlschema2java-example</module>
+    	<module>sqlschema2java-maven-plugin</module>
+    </modules>
+    
 </project>
