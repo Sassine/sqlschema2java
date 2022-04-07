@@ -15,7 +15,7 @@ public class TypeConverter {
 	public static final String TYPE_BOOLEAN = "Boolean";
 	public static final String TYPE_LOCAL_DATE_TIME = "LocalDateTime";
 
-	public void convertTypeFromSQLToEntityStore(final Database database, boolean isPostgress) {
+	public static void convertTypeFromSQLToEntityStore(final Database database, boolean isPostgress) {
 		for (final TableModel table : database.getTables()) {
 			for (final Column column : table.getColumnByNames().values()) {
 				if (column.getType() == null) {
@@ -27,7 +27,7 @@ public class TypeConverter {
 		}
 	}
 
-	public String convertTypeFromSQLToEntityStore(String sqlType, boolean isPostgres) {
+	public static String convertTypeFromSQLToEntityStore(String sqlType, boolean isPostgres) {
 		if (sqlType == null) return null;
 		else {
 			String sqlTypeFormatted = sqlType.trim().toUpperCase();

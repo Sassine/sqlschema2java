@@ -7,13 +7,13 @@ import dev.sassine.api.structure.model.sql.TableModel;
 public class DatabaseValidator {
 
 
-	public void validate(final Database database) {
+	public static void validate(final Database database) {
 		for(final TableModel table : database.getTables()) {
 			validateTable(table);
 		}
 	}
 
-	public void validateTable(final TableModel table) {
+	public static void validateTable(final TableModel table) {
 		
 		if(table.getPrimaryKey().getColumnNames().size() > 1) {
 			throw new RuntimeException("More than one column in the primary key!");

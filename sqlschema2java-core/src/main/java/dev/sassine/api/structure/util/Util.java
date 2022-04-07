@@ -1,5 +1,6 @@
 package dev.sassine.api.structure.util;
 
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 import java.io.BufferedReader;
@@ -25,124 +26,90 @@ public class Util {
 	private static final char CHAR2 = '`';
 	private static final char CHAR = '"';
 
-	public File getFileByClassPath(final String fileName) {
+	public static File getFileByClassPath(final String fileName) {
 		final URL url = Util.class.getResource(fileName);
 		if (nonNull(url)) {
 			try {
 				return new File(url.toURI());
 			} catch (final URISyntaxException e) {
-				log.error("Cannot convert URL to URI (file '{}' )" , fileName);
+				log.error("Cannot convert URL to URI (file '{}' )", fileName);
 				throw new RuntimeException("Cannot convert URL to URI (file '" + fileName + "')");
 			}
-		}
-		else {
-			log.error("File '{}' not found)" , fileName);
+		} else {
+			log.error("File '{}' not found)", fileName);
 			throw new RuntimeException("File '" + fileName + "' not found");
 		}
 	}
 
-	public InputStream getInputStream(final String filename) {
+	public static InputStream getInputStream(final String filename) {
 		try {
-			final File file = new File(filename);
-			final InputStream in = new FileInputStream(file);
-			return in;
+			return new FileInputStream(filename);
 		} catch (final FileNotFoundException e) {
-			log.error(e.getMessage(),e);
+			log.error(e.getMessage(), e);
 			throw new RuntimeException(e);
 		}
 	}
 
-	public OutputStream getOutputStream(final String filename) {
+	public static OutputStream getOutputStream(final String filename) {
 		try {
-
 			final String path = filename.substring(0, filename.lastIndexOf(File.separatorChar));
 			final File dir = new File(path);
 			dir.mkdirs();
-
 			final File file = new File(filename);
 			return new FileOutputStream(file);
-
 		} catch (final Exception e) {
-			log.error(e.getMessage(),e);
+			log.error(e.getMessage(), e);
 			throw new RuntimeException(e);
 		}
 	}
 
-	public String read(final InputStream is) {
-		BufferedReader br = null;
+	public static String read(final InputStream is) {
 		final StringBuilder sb = new StringBuilder();
-
 		String line;
-		try {
-
-			br = new BufferedReader(new InputStreamReader(is));
+		try (InputStreamReader isr = new InputStreamReader(is); BufferedReader br = new BufferedReader(isr);) {
 			boolean isFirst = true;
 			while ((line = br.readLine()) != null) {
-				if(isFirst) {
-					isFirst = false;
-				} else {
-					sb.append("\n");
-				}
-				sb.append(line);
+				if (isFirst) isFirst = false;
+				sb.append(isFirst ? "" : "\n").append(line);
 			}
-
 		} catch (final IOException e) {
-			log.error(e.getMessage(),e);
-		} finally {
-			if (br != null) {
-				try {
-					br.close();
-				} catch (final IOException e) {
-					log.error(e.getMessage(),e);
-				}
-			}
+			log.error(e.getMessage(), e);
 		}
 
 		return sb.toString();
 	}
 
-	public void write(final List<String> lines, final OutputStream os) {
-		BufferedWriter bw = null;
-		bw = new BufferedWriter(new OutputStreamWriter(os));
-		try {
+	public static void write(final List<String> lines, final OutputStream os) {
+		try (OutputStreamWriter out = new OutputStreamWriter(os); BufferedWriter bw = new BufferedWriter(out);) {
 			boolean isFirst = true;
-			for(final String line : lines) {
-				if(isFirst) {
-					isFirst = false;
-				} else {
-					bw.write("\n");
-				}
+			for (final String line : lines) {
+				if (isFirst) isFirst = false;
+				bw.write(isFirst ? "" : "\n");
 				bw.write(line);
 			}
-			bw.close();
 		} catch (final IOException e) {
-			log.error(e.getMessage(),e);
+			log.error(e.getMessage(), e);
 			throw new RuntimeException(e);
 		}
 	}
 
-	public void write(final String content, final OutputStream os) {
-		BufferedWriter bw = null;
-		bw = new BufferedWriter(new OutputStreamWriter(os));
-		try {
-			if(content != null) {
+	public static void write(final String content, final OutputStream os) {
+		try (OutputStreamWriter out = new OutputStreamWriter(os); BufferedWriter bw = new BufferedWriter(out);) {
+			if (content != null) {
 				bw.write(content);
 			}
-			bw.close();
 		} catch (final IOException e) {
-			log.error(e.getMessage(),e);
+			log.error(e.getMessage(), e);
 			throw new RuntimeException(e);
 		}
 	}
 
-	public String unformatSqlName(final String sqlName) {
-		if(sqlName == null) return null;
-		String name = sqlName;
-		if((name.length() >= 2) 		
-		&& (((name.charAt(0) == '"') && (name.charAt(name.length()-1) == CHAR)) 
-		|| ((name.charAt(0) == '`') && (name.charAt(name.length()-1) == CHAR2))))
-			name = name.substring(1,name.length()-1);
-		return name;
+	public static String unformatSqlName(final String sqlName) {
+		if (isNull(sqlName)) return null;
+		else if ((sqlName.length() >= 2) && (((sqlName.charAt(0) == '"') && (sqlName.charAt(sqlName.length() - 1) == CHAR))
+				|| ((sqlName.charAt(0) == '`') && (sqlName.charAt(sqlName.length() - 1) == CHAR2))))
+			return sqlName.substring(1, sqlName.length() - 1);
+		else return sqlName;
 	}
 
 }

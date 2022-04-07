@@ -15,22 +15,12 @@ public class GetSqlQuery {
 
 	public boolean isQueryFiltered(final String query) {
 		final String queryUpperCase = query.toUpperCase();
-		if(queryUpperCase.indexOf(CREATE_TABLE) == 0) {
-			return false;
-		}
-		
-		if(queryUpperCase.indexOf(ALTER_TABLE) == 0) {
-			if(queryUpperCase.indexOf(ADD_CONSTRAINT) != -1) {
-				if((queryUpperCase.indexOf(PRIMARY_KEY) != -1) || (queryUpperCase.indexOf(FOREIGN_KEY) != -1)) {
-					return false;
-				}
-			}
-			if(queryUpperCase.indexOf(ADD_PRIMARY_KEY) != -1) {
+		if(queryUpperCase.indexOf(CREATE_TABLE) == 0) return false;
+		else if(queryUpperCase.indexOf(ALTER_TABLE) == 0) {
+			if((queryUpperCase.indexOf(ADD_CONSTRAINT) != -1) && (queryUpperCase.indexOf(PRIMARY_KEY) != -1) || (queryUpperCase.indexOf(FOREIGN_KEY) != -1))
 				return false;
-			}
-			if(queryUpperCase.indexOf(ADD_FOREIGN_KEY) != -1) {
+			if(queryUpperCase.indexOf(ADD_PRIMARY_KEY) != -1 || queryUpperCase.indexOf(ADD_FOREIGN_KEY) != -1)
 				return false;
-			}
 		}
 
 		return true;

@@ -26,8 +26,8 @@
     
     <modules>
     	<module>sqlschema2java-core</module>
-    	<module>sqlschema2java-example</module>
     	<module>sqlschema2java-maven-plugin</module>
+		<module>sqlschema2java-example</module>
     </modules>
     
 </project>

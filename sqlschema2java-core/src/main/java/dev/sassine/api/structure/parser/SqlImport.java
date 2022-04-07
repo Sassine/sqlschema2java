@@ -1,5 +1,6 @@
 package dev.sassine.api.structure.parser;
 
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class SqlImport {
 	private static final String CREATE_TABLE = "CREATE TABLE";
 
 	public class SqlImportErrorListener extends BaseErrorListener {
-		
+
 		public String query;
 
 		@Override
@@ -31,19 +32,18 @@ public class SqlImport {
 
 			log.error(" Error on query: \n {} ", query);
 			log.error(" Line: {} | {}", line, msg);
-
-			if (nonNull(e)) {
-				if (nonNull(e.getMessage()))
-					log.error(e.getMessage());
-				if (nonNull(e.getCtx()))
-					log.error(" Context: {} ", e.getCtx());
-			}
+			
+			if (nonNull(e) && nonNull(e.getCtx()))
+				log.error(" Context: {} ", e.getCtx());
+			
+			if (nonNull(e) && nonNull(e.getMessage()))
+				log.error(e.getMessage());
 
 		}
 	}
 
 	public Database getDatabase(final String content) {
-		if (content == null) return null;
+		if (isNull(content)) return null;
 		final GetSqlQuery getSqlQuery = new GetSqlQuery();
 		final List<String> querys = getSqlQuery.getSqlQuerys(content);
 		return read(querys);
@@ -58,7 +58,8 @@ public class SqlImport {
 	}
 
 	public void readOneQuery(final Database database, final String query) {
-		if (query == null) return;
+		if (isNull(query)) return;
+		
 		final ANTLRInputStream in = new ANTLRInputStream(query);
 		final SqlLexer lexler = new SqlLexer(in);
 		final SqlParser parser = new SqlParser(new CommonTokenStream(lexler));
@@ -77,7 +78,7 @@ public class SqlImport {
 			log.error(" No parse listener for the query : \n {} ", query);
 			throw new RuntimeException("No parse listener for the query : " + query);
 		}
-		
+
 		parser.parse();
 
 	}

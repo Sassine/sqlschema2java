@@ -46,8 +46,6 @@ public class CreateTableParseListener extends SqlBaseListener {
 	private boolean inTypeName = false;
 	private boolean inTable_constraint_primary_key = false;
 
-	Util util = new Util();
-
 	public CreateTableParseListener(final SqlParser sqlParser, final Database database) {
 		this.sqlParser = sqlParser;
 		this.database = database;
@@ -79,7 +77,7 @@ public class CreateTableParseListener extends SqlBaseListener {
 	@Override
 	public void exitTable_name(final Table_nameContext ctx) {
 		if (inCreateTable) {
-			table.setName(util.unformatSqlName(ctx.getText()));
+			table.setName(Util.unformatSqlName(ctx.getText()));
 		}
 	}
 
@@ -105,7 +103,7 @@ public class CreateTableParseListener extends SqlBaseListener {
 	@Override
 	public void exitColumn_name(final Column_nameContext ctx) {
 		if (inCreateTable && inColumnDef) {
-			column.setName(util.unformatSqlName(ctx.getText()));
+			column.setName(Util.unformatSqlName(ctx.getText()));
 		}
 	}
 
@@ -123,9 +121,9 @@ public class CreateTableParseListener extends SqlBaseListener {
 	public void exitName(final NameContext ctx) {
 		if (inCreateTable && inColumnDef && inTypeName) {
 			if (column.getType() == null) {
-				column.setType(util.unformatSqlName(ctx.getText()));
+				column.setType(Util.unformatSqlName(ctx.getText()));
 			} else {
-				String ctxType = !ctx.getText().equals(AUTOINCREMENT) ? util.unformatSqlName(ctx.getText()) : "";
+				String ctxType = !ctx.getText().replace("_", "").equals(AUTOINCREMENT) ? Util.unformatSqlName(ctx.getText()) : "";
 				column.setType(format(FORMAT_COLUMN_TYPE, column.getType(), ctxType)); 
 			}
 		}
@@ -134,7 +132,7 @@ public class CreateTableParseListener extends SqlBaseListener {
 	@Override
 	public void exitColumn_default_value(final Column_default_valueContext ctx) {
 		if (inCreateTable && inColumnDef) {
-			column.setDefaultValue(util.unformatSqlName(ctx.getText()));
+			column.setDefaultValue(Util.unformatSqlName(ctx.getText()));
 		}
 	}
 
@@ -165,7 +163,7 @@ public class CreateTableParseListener extends SqlBaseListener {
 	@Override
 	public void exitIndexed_column(final Indexed_columnContext ctx) {
 		if (inCreateTable && inTable_constraint_primary_key) {
-			final String columnName = util.unformatSqlName(ctx.getText());
+			final String columnName = Util.unformatSqlName(ctx.getText());
 			table.getPrimaryKey().getColumnNames().add(columnName);
 		}
 	}
@@ -208,21 +206,21 @@ public class CreateTableParseListener extends SqlBaseListener {
 	@Override
 	public void exitForeign_table(final Foreign_tableContext ctx) {
 		if (inCreateTable) {
-			foreignKey.setTableNameTarget(util.unformatSqlName(ctx.getText()));
+			foreignKey.setTableNameTarget(Util.unformatSqlName(ctx.getText()));
 		}
 	}
 
 	@Override
 	public void exitFk_origin_column_name(final Fk_origin_column_nameContext ctx) {
 		if (foreignKey != null) {
-			foreignKey.getColumnNameOrigins().add(util.unformatSqlName(ctx.getText()));
+			foreignKey.getColumnNameOrigins().add(Util.unformatSqlName(ctx.getText()));
 		}
 	}
 
 	@Override
 	public void exitFk_target_column_name(final Fk_target_column_nameContext ctx) {
 		if (inCreateTable) {
-			foreignKey.getColumnNameTargets().add(util.unformatSqlName(ctx.getText()));
+			foreignKey.getColumnNameTargets().add(Util.unformatSqlName(ctx.getText()));
 		}
 	}
 

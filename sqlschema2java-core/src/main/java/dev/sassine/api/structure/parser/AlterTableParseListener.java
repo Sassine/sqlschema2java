@@ -34,7 +34,6 @@ public class AlterTableParseListener extends SqlBaseListener {
 	boolean inTable_constraint_primary_key = false; 
 	boolean inTable_constraint_foreign_key = false; 
 
-	Util util = new Util();
 
 	public AlterTableParseListener(final SqlParser sqlParser, final Database database) {
 		this.sqlParser = sqlParser;
@@ -60,7 +59,7 @@ public class AlterTableParseListener extends SqlBaseListener {
 	@Override
 	public void exitSource_table_name(final Source_table_nameContext ctx) {
 		if(inAlter_table_stmt) {
-			table = database.getTableForName(util.unformatSqlName(ctx.getText()));
+			table = database.getTableForName(Util.unformatSqlName(ctx.getText()));
 		}
 	}
 
@@ -91,7 +90,7 @@ public class AlterTableParseListener extends SqlBaseListener {
 	@Override
 	public void exitIndexed_column(final Indexed_columnContext ctx) {
 		if(inAlter_table_stmt && inTable_constraint_primary_key) {
-			final String columnName = util.unformatSqlName(ctx.getText());
+			final String columnName = Util.unformatSqlName(ctx.getText());
 			table.getPrimaryKey().getColumnNames().add(columnName);
 		}
 	}
@@ -100,7 +99,7 @@ public class AlterTableParseListener extends SqlBaseListener {
 	@Override
 	public void enterTable_constraint_foreign_key(final Table_constraint_foreign_keyContext ctx) {
 		inTable_constraint_foreign_key = true;
-		if(inAlter_table_stmt) {
+		if (inAlter_table_stmt) {
 			foreignKey = new ForeignKey();
 			foreignKey.setTableNameOrigin(table.getName());
 		}
@@ -119,14 +118,14 @@ public class AlterTableParseListener extends SqlBaseListener {
 	@Override
 	public void exitForeign_table(final Foreign_tableContext ctx) {
 		if(inTable_constraint_foreign_key) {
-			foreignKey.setTableNameTarget(util.unformatSqlName(ctx.getText()));
+			foreignKey.setTableNameTarget(Util.unformatSqlName(ctx.getText()));
 		}
 	}
 
 	@Override
 	public void exitFk_origin_column_name(final Fk_origin_column_nameContext ctx) {
 		if(inTable_constraint_foreign_key) {
-			foreignKey.getColumnNameOrigins().add(util.unformatSqlName(ctx.getText()));
+			foreignKey.getColumnNameOrigins().add(Util.unformatSqlName(ctx.getText()));
 		}
 	}
 
@@ -134,7 +133,7 @@ public class AlterTableParseListener extends SqlBaseListener {
 	public void exitFk_target_column_name(
 final Fk_target_column_nameContext ctx) {
 		if(inTable_constraint_foreign_key) {
-			foreignKey.getColumnNameTargets().add(util.unformatSqlName(ctx.getText()));
+			foreignKey.getColumnNameTargets().add(Util.unformatSqlName(ctx.getText()));
 		}
 	}
 

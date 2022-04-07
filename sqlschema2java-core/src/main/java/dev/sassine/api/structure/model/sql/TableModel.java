@@ -5,6 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class TableModel {
 
 	private String name;
@@ -17,38 +22,6 @@ public class TableModel {
 			if(fk.getColumnNameOrigins().stream().anyMatch(cl -> column.getName().equals(cl))) return fk;
 		}
 		return null;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(final String name) {
-		this.name = name;
-	}
-
-	public Map<String, Column> getColumnByNames() {
-		return columnByNames;
-	}
-
-	public void setColumnByNames(final Map<String, Column> columnByNames) {
-		this.columnByNames = columnByNames;
-	}
-
-	public PrimaryKey getPrimaryKey() {
-		return primaryKey;
-	}
-
-	public void setPrimaryKey(final PrimaryKey primaryKey) {
-		this.primaryKey = primaryKey;
-	}
-
-	public List<ForeignKey> getForeignKeys() {
-		return foreignKeys;
-	}
-
-	public void setForeignKeys(final List<ForeignKey> foreignKeys) {
-		this.foreignKeys = foreignKeys;
 	}
 
 }

@@ -1,6 +1,7 @@
 package dev.sassine.api.structure.export;
 
-import java.util.ArrayList;
+import static java.util.stream.Collectors.toList;
+
 import java.util.List;
 
 import dev.sassine.api.structure.model.java.EntityModel;
@@ -12,54 +13,40 @@ import dev.sassine.api.structure.model.sql.TableModel;
 
 public class DatabaseConverter {
 
-	public List<EntityModel> convert(final Database database) {
-		List<EntityModel> entitys = new ArrayList<>();
-		for (final TableModel table : database.getTables()) {
+	public static List<EntityModel> convert(final Database database) {
+		return database.getTables().stream().map(table -> {
 			final EntityModel entity = new EntityModel(table.getName(),"user_generated_value");
-			generateDefaultPK(table, entity);
-			for (final String columnName : table.getColumnByNames().keySet()) {
-				final Column column = table.getColumnByNames().get(columnName);
+			List<FieldModel> fields = entity.getFields();
+			generateDefaultPK(table, fields);
+			table.getColumnByNames().forEach((columnName,column) -> {
 				final FieldModel field = new FieldModel(column.getName());
 				final ForeignKey foreignKey = table.getForeignKeyForColumnNameOrigin(column);
 				generateFK(column, field, foreignKey);
 				flagColumnPK(table, columnName, field);
 				flagNullable(column, field);
 				setDefaultValueColumn(column, field);
-				entity.getFields().add(field);
-			}
-
-			entitys.add(entity);
-		}
-		return entitys;
+				fields.add(field);
+			});
+			return entity;
+		}).collect(toList());
 	}
 
-	private void setDefaultValueColumn(final Column column, final FieldModel field) {
+	private static void setDefaultValueColumn(final Column column, final FieldModel field) {
 		field.setDefaultValue(column.getDefaultValue());
 	}
 
-	private void flagNullable(final Column column, final FieldModel field) {
-		if ((column.getIsNotNull() != null) && column.getIsNotNull()) {
-			field.setNullable(false);
-		} else {
-			field.setNullable(true);
-		}
+	private static void flagNullable(final Column column, final FieldModel field) {
+		field.setNullable(!(column.getIsNotNull() != null) && column.getIsNotNull());
 	}
 
-	private void flagColumnPK(final TableModel table, final String columnName, final FieldModel field) {
-		if (table.getPrimaryKey().getColumnNames().size() == 1) {
-			for (final String columnNameInPrimaryKey : table.getPrimaryKey().getColumnNames()) {
-				if (columnName.equals(columnNameInPrimaryKey)) {
-					field.setIsPrimaryKey(true);
-				}
-			}
-		}
+	private static void flagColumnPK(final TableModel table, final String columnName, final FieldModel field) {
+		if(table.getPrimaryKey().getColumnNames().stream().anyMatch(cl -> cl.equals(columnName))) 
+			field.setIsPrimaryKey(true);
 	}
 
-	private void generateFK(final Column column, final FieldModel field, final ForeignKey foreignKey) {
-		if(foreignKey == null) {
-			if(column.getConvertedType() != null) {
+	private static void generateFK(final Column column, final FieldModel field, final ForeignKey foreignKey) {
+		if(foreignKey == null && column.getConvertedType() != null) {
 				field.setType(column.getConvertedType());
-			}
 		} else {
 			field.setType(foreignKey.getTableNameTarget());
 			field.setMinOccurs(0);
@@ -67,14 +54,14 @@ public class DatabaseConverter {
 		}
 	}
 
-	private void generateDefaultPK(final TableModel table, final EntityModel entity) {
+	private static void generateDefaultPK(final TableModel table, final List<FieldModel> fields) {
 		if (table.getPrimaryKey().getColumnNames().size() != 1) {
 			final FieldModel field = new FieldModel();
 			field.setName("id");
 			field.setType("Integer");
 			field.setIsPrimaryKey(true);
 			field.setNullable(false);
-			entity.getFields().add(field);
+			fields.add(field);
 		}
 	}
 
