@@ -35,7 +35,7 @@ jobs:
           distribution: 'adopt'
       - name: Publish package SQLSchema2Java Core
         run: | 
-            cd sqlschema2java-core
+            cd sqlschema2java-maven-plugin
             mvn --batch-mode deploy 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
