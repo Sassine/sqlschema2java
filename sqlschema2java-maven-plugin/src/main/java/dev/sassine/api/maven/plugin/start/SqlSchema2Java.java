@@ -18,6 +18,9 @@ public class SqlSchema2Java extends AbstractMojo {
     @Parameter(property = "sql.source.directory" , required = true, readonly = true)
     String sourceDirectory;
     
+    @Parameter(property = "sql.source.directory" , defaultValue = "dev.sassine.api.default", required = false, readonly = true)
+    String packageName;
+    
     @Parameter(property = "sql.type.is.postgres" , defaultValue = "false", required = false, readonly = true)
     Boolean isPostgres;
     
@@ -31,7 +34,7 @@ public class SqlSchema2Java extends AbstractMojo {
     
     public void execute() throws MojoExecutionException, MojoFailureException {
         getLog().info(" ");
-        new Sqlschema2Java().compile(sourceDirectory, isPostgres, useAutoIncrement);
+        Sqlschema2Java.generate(sourceDirectory, isPostgres, useAutoIncrement,packageName);
         getLog().info(" ");
     }
     
