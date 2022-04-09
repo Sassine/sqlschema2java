@@ -98,5 +98,13 @@
 			<url>https://maven.pkg.github.com/Sassine/sqlschema2java</url>
 		</repository>
 	</distributionManagement>
+	
+	<repositories>
+		<repository>
+			<id>github</id>
+			<name>GitHub Packages SQLSchema2Java</name>
+			<url>https://maven.pkg.github.com/Sassine/sqlschema2java</url>
+		</repository>
+	</repositories>
 
 </project>
