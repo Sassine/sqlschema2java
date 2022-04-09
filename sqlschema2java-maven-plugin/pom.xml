@@ -90,5 +90,13 @@
 		<maven-plugin-plugin.version>3.6.0</maven-plugin-plugin.version>
 		<maven-site-plugin.version>3.8.2</maven-site-plugin.version>
 	</properties>
+	
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub Packages</name>
+			<url>https://maven.pkg.github.com/Sassine/sqlschema2java</url>
+		</repository>
+	</distributionManagement>
 
 </project>
