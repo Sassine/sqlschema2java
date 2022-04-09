@@ -1,47 +1,28 @@
 package dev.sassine.api.structure.parser;
 
 import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
+import static org.apache.logging.log4j.LogManager.getLogger;
 
 import java.util.List;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.RecognitionException;
-import org.antlr.v4.runtime.Recognizer;
+import org.apache.logging.log4j.Logger;
 
 import dev.sassine.api.structure.SqlLexer;
 import dev.sassine.api.structure.SqlParser;
 import dev.sassine.api.structure.model.sql.Database;
-import lombok.extern.slf4j.Slf4j;
+import dev.sassine.api.structure.parser.error.SqlImportErrorListener;
 
-@Slf4j
 public class SqlImport {
-
+	private static final Logger log = getLogger();
 	private static final String ALTER_TABLE = "ALTER TABLE";
 	private static final String CREATE_TABLE = "CREATE TABLE";
 
-	public class SqlImportErrorListener extends BaseErrorListener {
-
-		public String query;
-
-		@Override
-		public void syntaxError(final Recognizer<?, ?> recognizer, final Object offendingSymbol, final int line,
-				final int charPositionInLine, final String msg, final RecognitionException e) {
-
-			log.error(" Error on query: \n {} ", query);
-			log.error(" Line: {} | {}", line, msg);
-			
-			if (nonNull(e) && nonNull(e.getCtx()))
-				log.error(" Context: {} ", e.getCtx());
-			
-			if (nonNull(e) && nonNull(e.getMessage()))
-				log.error(e.getMessage());
-
-		}
+	public static SqlImport init() {
+		return new SqlImport();
 	}
-
+	
 	public Database getDatabase(final String content) {
 		if (isNull(content)) return null;
 		final GetSqlQuery getSqlQuery = new GetSqlQuery();
@@ -63,10 +44,7 @@ public class SqlImport {
 		final ANTLRInputStream in = new ANTLRInputStream(query);
 		final SqlLexer lexler = new SqlLexer(in);
 		final SqlParser parser = new SqlParser(new CommonTokenStream(lexler));
-
-		final SqlImportErrorListener listener = new SqlImportErrorListener();
-		listener.query = query;
-		parser.addErrorListener(listener);
+		parser.addErrorListener(new SqlImportErrorListener(query));
 
 		log.debug(" Parse the query : \n {} ", query);
 
@@ -75,7 +53,7 @@ public class SqlImport {
 		} else if (query.toUpperCase().indexOf(ALTER_TABLE) == 0) {
 			parser.addParseListener(new AlterTableParseListener(parser, database));
 		} else {
-			log.error(" No parse listener for the query : \n {} ", query);
+			log.error(" No parse listener (Create or Alter Table) for the query : \n {} ", query);
 			throw new RuntimeException("No parse listener for the query : " + query);
 		}
 

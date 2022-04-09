@@ -1,5 +1,8 @@
 package dev.sassine.api.structure.parser;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import dev.sassine.api.structure.SqlBaseListener;
 import dev.sassine.api.structure.SqlParser;
 import dev.sassine.api.structure.SqlParser.Alter_table_add_constraintContext;
@@ -17,11 +20,11 @@ import dev.sassine.api.structure.model.sql.Database;
 import dev.sassine.api.structure.model.sql.ForeignKey;
 import dev.sassine.api.structure.model.sql.TableModel;
 import dev.sassine.api.structure.util.Util;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class AlterTableParseListener extends SqlBaseListener {
 
+	private static final Logger log = LogManager.getLogger();
+	
 	private final SqlParser sqlParser;
 	private final Database database;
 

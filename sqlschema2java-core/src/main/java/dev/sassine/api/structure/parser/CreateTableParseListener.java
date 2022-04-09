@@ -2,6 +2,9 @@ package dev.sassine.api.structure.parser;
 
 import static java.lang.String.format;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import dev.sassine.api.structure.SqlBaseListener;
 import dev.sassine.api.structure.SqlParser;
 import dev.sassine.api.structure.SqlParser.Any_nameContext;
@@ -27,11 +30,9 @@ import dev.sassine.api.structure.model.sql.Database;
 import dev.sassine.api.structure.model.sql.ForeignKey;
 import dev.sassine.api.structure.model.sql.TableModel;
 import dev.sassine.api.structure.util.Util;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class CreateTableParseListener extends SqlBaseListener {
-
+	private static final Logger log = LogManager.getLogger();
 	private static final String AUTOINCREMENT = "AUTOINCREMENT";
 	private static final String FORMAT_COLUMN_TYPE = "%s %s";
 	private final SqlParser sqlParser;

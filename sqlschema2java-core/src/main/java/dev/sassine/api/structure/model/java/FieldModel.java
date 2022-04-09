@@ -20,6 +20,7 @@ public class FieldModel {
 	private String defaultValue;
 	private Integer minOccurs;
 	private String maxOccurs;
+	private boolean isEmbedded;
 
 	public FieldModel(String name) {
 		this.name = name;

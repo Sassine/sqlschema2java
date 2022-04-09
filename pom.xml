@@ -29,5 +29,13 @@
     	<module>sqlschema2java-maven-plugin</module>
 		<module>sqlschema2java-example</module>
     </modules>
+
+	<distributionManagement>
+		<repository>
+		<id>github</id>
+		<name>GitHub Packages</name>
+		<url>https://maven.pkg.github.com/Sassine/sqlschema2java</url>
+		</repository>
+  	</distributionManagement>
     
 </project>

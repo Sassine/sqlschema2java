@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -25,8 +26,7 @@ import dev.sassine.api.structure.util.Util;
 
 public class SqlImportTest {
 
-	private SqlImport sqlImport = new SqlImport();
-	private Util util = new Util();
+	private SqlImport sqlImport = SqlImport.init();
 
 	@Test
 	public void testGetDatabase_nofile() {
@@ -35,10 +35,10 @@ public class SqlImportTest {
 	}
 
 	@Test
-	public void testGetDatabase_standard() throws FileNotFoundException {
-		final File file = util.getFileByClassPath("/standard.sql");
+	public void testGetDatabase_standard() throws FileNotFoundException, URISyntaxException  {
+		final File file = Util.getFileByClassPath("/standard.sql");
 		final InputStream in = new FileInputStream(file);
-		final String sqlContent = util.read(in);
+		final String sqlContent = Util.read(in);
 		final Database database = sqlImport.getDatabase(sqlContent);
 
 		assertEquals(3, database.getTables().size());
@@ -124,7 +124,6 @@ public class SqlImportTest {
 		assertEquals("nom_table3", fk_table2_table3.getColumnNameOrigins().get(1));
 		assertEquals("nom", fk_table2_table3.getColumnNameTargets().get(1));
 
-		// Table 3
 		assertEquals(2, table3.getColumnByNames().keySet().size());
 		final Column t3_id = table3.getColumnByNames().get("id");
 		final Column t3_nom = table3.getColumnByNames().get("nom");
@@ -139,10 +138,10 @@ public class SqlImportTest {
 	}
 
 	@Test
-	public void testGetDatabase_mysql1() throws FileNotFoundException {
-		final File file = util.getFileByClassPath("/mysql1.sql");
+	public void testGetDatabase_mysql1() throws FileNotFoundException, URISyntaxException  {
+		final File file = Util.getFileByClassPath("/mysql1.sql");
 		final InputStream in = new FileInputStream(file);
-		final String sqlContent = util.read(in);
+		final String sqlContent = Util.read(in);
 		final Database database = sqlImport.getDatabase(sqlContent);
 		assertEquals(5, database.getTables().size());
 		final TableModel Company = database.getTables().get(0);
@@ -235,10 +234,10 @@ public class SqlImportTest {
 	}
 
 	@Test
-	public void testGetDatabase_mysql_mysqlworkbench() throws FileNotFoundException {
-		final File file = util.getFileByClassPath("/mysql_mysqlworkbench.sql");
+	public void testGetDatabase_mysql_mysqlworkbench() throws FileNotFoundException, URISyntaxException  {
+		final File file = Util.getFileByClassPath("/mysql_mysqlworkbench.sql");
 		final InputStream in = new FileInputStream(file);
-		final String sqlContent = util.read(in);
+		final String sqlContent = Util.read(in);
 		final Database database = sqlImport.getDatabase(sqlContent);
 		assertEquals(5, database.getTables().size());
 		final TableModel Company = database.getTables().get(0);
@@ -301,10 +300,10 @@ public class SqlImportTest {
 	}
 
 	@Test
-	public void testGetDatabase_mysql_mysqldump() throws FileNotFoundException {
-		final File file = util.getFileByClassPath("/mysql_mysqldump.sql");
+	public void testGetDatabase_mysql_mysqldump() throws FileNotFoundException, URISyntaxException  {
+		final File file = Util.getFileByClassPath("/mysql_mysqldump.sql");
 		final InputStream in = new FileInputStream(file);
-		final String sqlContent = util.read(in);
+		final String sqlContent = Util.read(in);
 		final Database database = sqlImport.getDatabase(sqlContent);
 		assertEquals(5, database.getTables().size());
 		final TableModel Company = database.getTables().get(0);
@@ -367,10 +366,10 @@ public class SqlImportTest {
 	}
 
 	@Test
-	public void testGetDatabase_postgres_sql_and_uuid() throws FileNotFoundException {
-		final File file = util.getFileByClassPath("/postgres.sql");
+	public void testGetDatabase_postgres_sql_and_uuid() throws FileNotFoundException, URISyntaxException  {
+		final File file = Util.getFileByClassPath("/postgres.sql");
 		final InputStream in = new FileInputStream(file);
-		final String sqlContent = util.read(in);
+		final String sqlContent = Util.read(in);
 		final Database database = sqlImport.getDatabase(sqlContent);
 		assertEquals(9, database.getTables().size());
 		assertEquals(9, database.getTables().size());
@@ -529,10 +528,10 @@ public class SqlImportTest {
 	}
 
 	@Test
-	public void testGetDatabase_postgres_backup() throws FileNotFoundException {
-		final File file = util.getFileByClassPath("/postgres.backup");
+	public void testGetDatabase_postgres_backup() throws FileNotFoundException, URISyntaxException  {
+		final File file = Util.getFileByClassPath("/postgres.backup");
 		final InputStream in = new FileInputStream(file);
-		final String sqlContent = util.read(in);
+		final String sqlContent = Util.read(in);
 		final Database database = sqlImport.getDatabase(sqlContent);
 		assertEquals(5, database.getTables().size());
 		assertEquals(5, database.getTables().size());
@@ -597,10 +596,10 @@ public class SqlImportTest {
 	}
 
 	@Test
-	public void testGetDatabase_postgres_pg_dump() throws FileNotFoundException {
-		final File file = util.getFileByClassPath("/postgres_pg_dump.sql");
+	public void testGetDatabase_postgres_pg_dump() throws FileNotFoundException, URISyntaxException  {
+		final File file = Util.getFileByClassPath("/postgres_pg_dump.sql");
 		final InputStream in = new FileInputStream(file);
-		final String sqlContent = util.read(in);
+		final String sqlContent = Util.read(in);
 		final Database database = sqlImport.getDatabase(sqlContent);
 		assertEquals(5, database.getTables().size());
 		assertEquals(5, database.getTables().size());
@@ -665,10 +664,10 @@ public class SqlImportTest {
 	}
 
 	@Test
-	public void testGetDatabase_oracle1() throws FileNotFoundException {
-		final File file = util.getFileByClassPath("/oracle1.sql");
+	public void testGetDatabase_oracle1() throws FileNotFoundException, URISyntaxException  {
+		final File file = Util.getFileByClassPath("/oracle1.sql");
 		final InputStream in = new FileInputStream(file);
-		final String sqlContent = util.read(in);
+		final String sqlContent = Util.read(in);
 		final Database database = sqlImport.getDatabase(sqlContent);
 		assertEquals(4, database.getTables().size());
 		assertEquals(4, database.getTables().size());
@@ -750,10 +749,10 @@ public class SqlImportTest {
 	}
 
 	@Test
-	public void testGetDatabase_oracle2() throws FileNotFoundException {
-		final File file = util.getFileByClassPath("/oracle2.sql");
+	public void testGetDatabase_oracle2() throws FileNotFoundException, URISyntaxException  {
+		final File file = Util.getFileByClassPath("/oracle2.sql");
 		final InputStream in = new FileInputStream(file);
-		final String sqlContent = util.read(in);
+		final String sqlContent = Util.read(in);
 		final Database database = sqlImport.getDatabase(sqlContent);
 		assertEquals(3, database.getTables().size());
 		assertEquals(3, database.getTables().size());
@@ -874,10 +873,10 @@ public class SqlImportTest {
 	}
 	
 	@Test
-	public void testGetDatabase_oracle_sqldeveloper() throws FileNotFoundException {
-		final File file = util.getFileByClassPath("/oracle_sqldeveloper.sql");
+	public void testGetDatabase_oracle_sqldeveloper() throws FileNotFoundException, URISyntaxException  {
+		final File file = Util.getFileByClassPath("/oracle_sqldeveloper.sql");
 		final InputStream in = new FileInputStream(file);
-		final String sqlContent = util.read(in);
+		final String sqlContent = Util.read(in);
 		final Database database = sqlImport.getDatabase(sqlContent);
 		assertEquals(5, database.getTables().size());
 		final TableModel table1 = database.getTables().get(0);

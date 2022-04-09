@@ -1,34 +1,33 @@
 package dev.sassine.api.structure.type;
 
-import dev.sassine.api.structure.model.sql.Column;
+import static java.util.Optional.ofNullable;
+import static org.apache.logging.log4j.LogManager.getLogger;
+
+import org.apache.logging.log4j.Logger;
+
 import dev.sassine.api.structure.model.sql.Database;
-import dev.sassine.api.structure.model.sql.TableModel;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class TypeConverter {
-
+	private static final Logger log = getLogger();
 	public static final String TYPE_STRING = "String";
 	public static final String TYPE_UUID = "UUID";
 	public static final String TYPE_FLOAT = "Float";
 	public static final String TYPE_INTEGER = "Integer";
 	public static final String TYPE_BOOLEAN = "Boolean";
 	public static final String TYPE_LOCAL_DATE_TIME = "LocalDateTime";
+	public static final String TYPE_LOCAL_DATE = "LocalDate";
+	public static final String TYPE_LOCAL_TIME = "LocalTime";
 
-	public static void convertTypeFromSQLToEntityStore(final Database database, boolean isPostgress) {
-		for (final TableModel table : database.getTables()) {
-			for (final Column column : table.getColumnByNames().values()) {
-				if (column.getType() == null) {
-					column.setConvertedType("");
-				} else {
-					column.setConvertedType(convertTypeFromSQLToEntityStore(column.getType(), isPostgress));
-				}
-			}
-		}
+	public static void convertTypeFromSQLDataBaseToEntityStore(final Database database, boolean isPostgress) {
+		database.getTables().forEach(table -> {
+			table.getColumnByNames().values().forEach(column -> {
+				column.setConvertedType(convertTypeFromSQLToEntityStore(ofNullable(column.getType()).orElse(""), isPostgress));
+			});
+		});
 	}
 
 	public static String convertTypeFromSQLToEntityStore(String sqlType, boolean isPostgres) {
-		if (sqlType == null) return null;
+		if (sqlType == null) return "";
 		else {
 			String sqlTypeFormatted = sqlType.trim().toUpperCase();
 			if ((sqlTypeFormatted.indexOf("INTERVAL DAY ") == 0)) 
@@ -107,12 +106,14 @@ public class TypeConverter {
 			case "TIMETZ":
 			case "TIMESTAMPTZ":
 			case "TIMESTAMP":
+				return TYPE_LOCAL_DATE_TIME;
 			case "TIMESTAMP WITH TIME ZONE":
 			case "TIME":
 			case "TIME WITH TIME ZONE":
+				return TYPE_LOCAL_TIME;
 			case "DATETIME":
 			case "DATE":
-				return TYPE_LOCAL_DATE_TIME;
+				return TYPE_LOCAL_DATE;
 			default:
 				log.error("Unknown SQL type {}",sqlTypeFormatted);
 				throw new RuntimeException("Unknown SQL type "+sqlTypeFormatted);
