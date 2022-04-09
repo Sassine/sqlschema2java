@@ -15,6 +15,6 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
       - name: Publish package SQLSchema2Java
-        run: cd sqlschema2java-core && mvn --batch-mode deploy && cd../sqlschema2java-maven-plugin && mvn --batch-mode deploy
+        run: cd sqlschema2java-core && mvn --batch-mode deploy && cd ../sqlschema2java-maven-plugin && mvn --batch-mode deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
