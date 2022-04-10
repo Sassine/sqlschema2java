@@ -8,6 +8,8 @@ _sqlschema2java_ generates Java types from SQLSchema and annotate those types fo
 You can use sqlschema2java as a Maven plugin. 
 [**Try at the sample project exemple**](https://github.com/Sassine/sqlschema2java/tree/main/sqlschema2java-example)
 
+[**Read Getting Started**](https://github.com/Sassine/sqlschema2java/wiki/Getting-Started)
+
 ## Implementation
 
 #### A very simple Maven example:
