@@ -64,6 +64,8 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 Please make sure to update tests as appropriate.
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/P5P8C2H8Q)
+
 ## License
 
 [MIT ](https://github.com/Sassine/sqlschema2java/blob/main/LICENSE)
