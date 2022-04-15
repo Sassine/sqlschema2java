@@ -23,6 +23,9 @@ import dev.sassine.api.structure.model.java.FieldModel;
 
 public class ImportBeanFunction {
 	
+	private static final String TIME_DESERIALIZER = "LocalTimeDeserializer.class";
+	private static final String DATE_DESERIALIZER = "LocalDateDeserializer.class";
+	private static final String DATE_TIME_DESERIALIZER = "LocalDateTimeDeserializer.class";
 	private static final String PARAM_USING = "using";
 	private static final String FORMAT_IMPORT_ENTITY_PACKAGE = "%s.domain.%sEntity";
 	
@@ -39,20 +42,21 @@ public class ImportBeanFunction {
 	public static void importJavaTimeAndJSONDeserialize(VariableSourceGenerator field, UnitSourceGenerator gen,
 			FieldModel fieldModel) {
 		if (TYPE_LOCAL_DATE_TIME.equals(fieldModel.getType())) {
-			field.addAnnotation(AnnotationSourceGenerator.create(JsonDeserialize.class).addParameter(PARAM_USING,
-					VariableSourceGenerator
-							.create(TypeDeclarationSourceGenerator.create(LocalDateTimeDeserializer.class))));
 			gen.addImport(LocalDateTime.class);
+			gen.addImport(LocalDateTimeDeserializer.class);
+			field.addAnnotation(AnnotationSourceGenerator.create(JsonDeserialize.class).addParameter(PARAM_USING,
+					VariableSourceGenerator.create(TypeDeclarationSourceGenerator.create(DATE_TIME_DESERIALIZER))));
 		} else if (TYPE_LOCAL_DATE.equals(fieldModel.getType())) {
 			gen.addImport(LocalDate.class);
+			gen.addImport(LocalDateDeserializer.class);
 			field.addAnnotation(AnnotationSourceGenerator.create(JsonDeserialize.class).addParameter(PARAM_USING,
-					VariableSourceGenerator
-							.create(TypeDeclarationSourceGenerator.create(LocalDateDeserializer.class))));
+					VariableSourceGenerator.create(TypeDeclarationSourceGenerator.create(DATE_DESERIALIZER))));
 		} else if (TYPE_LOCAL_TIME.equals(fieldModel.getType())) {
 			gen.addImport(LocalTime.class);
+			gen.addImport(LocalTimeDeserializer.class);
 			field.addAnnotation(AnnotationSourceGenerator.create(JsonDeserialize.class).addParameter(PARAM_USING,
-					VariableSourceGenerator
-							.create(TypeDeclarationSourceGenerator.create(LocalTimeDeserializer.class))));
+					VariableSourceGenerator.create(TypeDeclarationSourceGenerator.create(TIME_DESERIALIZER))));
+
 		}
 	}
 }
