@@ -1,11 +1,9 @@
-# SQLSchema2Java  
+# SQLSchema2Java  [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
+
 
 [![Publish package to GitHub Packages](https://github.com/Sassine/sqlschema2java/actions/workflows/deploy.yml/badge.svg)](https://github.com/Sassine/sqlschema2java/actions/workflows/deploy.yml) 
 [![CodeQL main](https://github.com/Sassine/sqlschema2java/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Sassine/sqlschema2java/actions/workflows/codeql-analysis.yml)
 [![GitHub release](https://img.shields.io/github/release/Sassine/sqlschema2java.svg)](https://GitHub.com/Sassine/sqlschema2java/releases/)
-[![GitHub license](https://img.shields.io/github/license/Sassine/sqlschema2java.svg)](https://github.com/Sassine/sqlschema2java/blob/master/LICENSE)
-
-[![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
 ![Logo SQL2JAVA  and website adress sassine.dev/sqlschema2java](https://sassine.dev/assets/images/SQLSchema2Java_Logo2.png)
 
