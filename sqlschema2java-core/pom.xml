@@ -8,12 +8,16 @@
 	<artifactId>sqlschema2java-core</artifactId>
 	<version>1.0.0-beta1</version>
 	<name>sqlschema2java-core</name>
-	
+
 	<description>Auto generate Class DTO, Entity and Repository from SQL Query. </description>
 	<url>https://sassine.dev/</url>
 
 	<properties>
 		<java.version>11</java.version>
+		<coveralls-maven-plugin.version>4.3.0</coveralls-maven-plugin.version>
+		<jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
+		<copyright.holder>Sassine El-Asmar</copyright.holder>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<developers>
@@ -30,6 +34,32 @@
 	</developers>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>${project.basedir}</directory>
+				<includes>
+					<include>**LICENSE</include>
+				</includes>
+				<targetPath>META-INF</targetPath>
+			</resource>
+			<resource>
+				<directory>${project.basedir}/src/main/resources</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>${project.basedir}/src/test/java</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</testResource>
+			<testResource>
+				<directory>${project.basedir}/src/test/resources</directory>
+			</testResource>
+		</testResources>
 		<plugins>
 			<plugin>
 				<groupId>org.pitest</groupId>
@@ -80,14 +110,61 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
 				<configuration>
-					<sql-file>./sql.sql</sql-file>
 					<encoding>UTF-8</encoding>
 					<source>11</source>
 					<target>11</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.eluder.coveralls</groupId>
+				<artifactId>coveralls-maven-plugin</artifactId>
+				<version>${coveralls-maven-plugin.version}</version>
+				<configuration>
+					<sourceDirectories>
+						<sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+					</sourceDirectories>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>javax.xml.bind</groupId>
+						<artifactId>jaxb-api</artifactId>
+						<version>2.3.1</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>default-report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<excludes>
+						<exclude>**/*SqlListener*</exclude>
+						<exclude>**/*SqlBaseListener*</exclude>
+						<exclude>**/*SqlLexer*</exclude>
+						<exclude>**/*SqlParser*</exclude>
+						<exclude>**/*Main</exclude>
+						<exclude>**/*Sqlschema2Java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
+
 
 	<dependencies>
 		<dependency>
