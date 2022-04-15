@@ -6,7 +6,7 @@
 
 	<groupId>dev.sassine.api</groupId>
 	<artifactId>sqlschema2java-core</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.0-beta1</version>
 	<name>sqlschema2java-core</name>
 	
 	<description>Auto generate Class DTO, Entity and Repository from SQL Query. </description>
