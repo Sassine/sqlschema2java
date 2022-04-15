@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>dev.sassine.api</groupId>
 	<artifactId>sqlschema2java-maven-plugin</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0-beta1</version>
 	<name>sqlschema2java-maven-plugin</name>
 	<packaging>maven-plugin</packaging>
 
@@ -81,7 +81,7 @@
 	</reporting>
 
 	<properties>
-		<sqlschema2java-core.version>1.0.0-SNAPSHOT</sqlschema2java-core.version>
+		<sqlschema2java-core.version>1.0.0-beta1</sqlschema2java-core.version>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven-plugin-api.version>3.6.2</maven-plugin-api.version>

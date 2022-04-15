@@ -9,12 +9,21 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import org.burningwave.core.classes.AnnotationSourceGenerator;
+import org.burningwave.core.classes.TypeDeclarationSourceGenerator;
 import org.burningwave.core.classes.UnitSourceGenerator;
+import org.burningwave.core.classes.VariableSourceGenerator;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 
 import dev.sassine.api.structure.model.java.FieldModel;
 
 public class ImportBeanFunction {
 	
+	private static final String PARAM_USING = "using";
 	private static final String FORMAT_IMPORT_ENTITY_PACKAGE = "%s.domain.%sEntity";
 	
 	public static void importEntityClass(String nameClass, String packageName, UnitSourceGenerator gen) {
@@ -26,5 +35,24 @@ public class ImportBeanFunction {
 		else if (TYPE_LOCAL_DATE.equals(fieldModel.getType())) gen.addImport(LocalDate.class);
 		else if (TYPE_LOCAL_TIME.equals(fieldModel.getType())) gen.addImport(LocalTime.class);
 	}
-	
+
+	public static void importJavaTimeAndJSONDeserialize(VariableSourceGenerator field, UnitSourceGenerator gen,
+			FieldModel fieldModel) {
+		if (TYPE_LOCAL_DATE_TIME.equals(fieldModel.getType())) {
+			field.addAnnotation(AnnotationSourceGenerator.create(JsonDeserialize.class).addParameter(PARAM_USING,
+					VariableSourceGenerator
+							.create(TypeDeclarationSourceGenerator.create(LocalDateTimeDeserializer.class))));
+			gen.addImport(LocalDateTime.class);
+		} else if (TYPE_LOCAL_DATE.equals(fieldModel.getType())) {
+			gen.addImport(LocalDate.class);
+			field.addAnnotation(AnnotationSourceGenerator.create(JsonDeserialize.class).addParameter(PARAM_USING,
+					VariableSourceGenerator
+							.create(TypeDeclarationSourceGenerator.create(LocalDateDeserializer.class))));
+		} else if (TYPE_LOCAL_TIME.equals(fieldModel.getType())) {
+			gen.addImport(LocalTime.class);
+			field.addAnnotation(AnnotationSourceGenerator.create(JsonDeserialize.class).addParameter(PARAM_USING,
+					VariableSourceGenerator
+							.create(TypeDeclarationSourceGenerator.create(LocalTimeDeserializer.class))));
+		}
+	}
 }

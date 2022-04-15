@@ -1,7 +1,7 @@
 package dev.sassine.api.structure.export.builder.factory.impl;
 
 import static dev.sassine.api.structure.export.builder.function.ImportBeanFunction.importEntityClass;
-import static dev.sassine.api.structure.export.builder.function.ImportBeanFunction.importJavaTime;
+import static dev.sassine.api.structure.export.builder.function.ImportBeanFunction.importJavaTimeAndJSONDeserialize;
 import static dev.sassine.api.structure.export.builder.function.StoreClassFuncation.store;
 import static java.lang.String.format;
 import static java.lang.reflect.Modifier.PUBLIC;
@@ -38,7 +38,7 @@ public class DTOFactory implements Factory {
 	private static final String FORMAT_NEW_ENTITY_METHOD = "%s entity = new %s();";
 	private static final String FORMAT_STRING_FIELDS = "\"%s\"";
 	private static final String FORMAT_PACKAGE_DOT_PACKAGE = "%s.%s";
-	private static final String FORMAT_SETTER_EQ_GETTER = "this.%s = entity.get%s();";
+	private static final String FORMAT_SET_VALUE = "entity.set%s(this.%s);";
 	private static final String PARAM_VALUE = "value";
 	
 	@Override
@@ -56,7 +56,7 @@ public class DTOFactory implements Factory {
 		log.debug("Prepare generate ({}) fields", entityModel.getFields().size());
 		entityModel.getFields().forEach(fieldModel -> {
 			VariableSourceGenerator field = this.buildField(fieldModel);
-			importJavaTime(gen, fieldModel);
+			importJavaTimeAndJSONDeserialize(field,gen, fieldModel);
 			this.addFunctionToMethodFunction(fm, fieldModel);
 			log.debug("Adding field in functionMethod toEntity");
 			clDTO.addField(field);
@@ -76,7 +76,7 @@ public class DTOFactory implements Factory {
 	}
 
 	private void addFunctionToMethodFunction(FunctionSourceGenerator functionMethodToEntity, FieldModel fieldModel) {
-		functionMethodToEntity.addBodyCodeLine(format(FORMAT_SETTER_EQ_GETTER, fieldModel.getCamelName(), fieldModel.getCamelNameUpper()));
+		functionMethodToEntity.addBodyCodeLine(format(FORMAT_SET_VALUE, fieldModel.getCamelNameUpper(), fieldModel.getCamelName()));
 	}
 
 	private VariableSourceGenerator buildField(FieldModel fieldModel) {

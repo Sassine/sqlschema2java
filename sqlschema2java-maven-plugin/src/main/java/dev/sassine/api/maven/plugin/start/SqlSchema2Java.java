@@ -1,4 +1,7 @@
 package dev.sassine.api.maven.plugin.start;
+import static dev.sassine.api.structure.Sqlschema2Java.generate;
+import static java.lang.String.format;
+
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -7,9 +10,7 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
-import dev.sassine.api.structure.Sqlschema2Java;
-
-@Mojo(name = "sqlschema2java", defaultPhase = LifecyclePhase.NONE)
+@Mojo(name = "generate", defaultPhase = LifecyclePhase.NONE)
 public class SqlSchema2Java extends AbstractMojo {
 
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
@@ -27,15 +28,10 @@ public class SqlSchema2Java extends AbstractMojo {
     @Parameter(property = "sql.type.auto.increment.enabled" , defaultValue = "true", required = false, readonly = true)
     Boolean useAutoIncrement;
    
-    @Parameter(property = "log.debug.enabled" , defaultValue = "false", required = false, readonly = true)
-    String debugEnabled;
-    
-
     
     public void execute() throws MojoExecutionException, MojoFailureException {
-        getLog().info(" ");
-        Sqlschema2Java.generate(sourceDirectory, isPostgres, useAutoIncrement,packageName);
-        getLog().info(" ");
+        getLog().info(format(" packageName %s - sourceDirectory %s - isPostgres %s - useAutoIncrement %s", sourceDirectory, packageName, isPostgres, useAutoIncrement));
+        generate(sourceDirectory, isPostgres, useAutoIncrement, packageName);
     }
     
 }

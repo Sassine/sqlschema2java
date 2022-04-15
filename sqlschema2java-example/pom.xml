@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>dev.sasine.api</groupId>
     <artifactId>sqlschema2java-example</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0-beta1</version>
     <packaging>pom</packaging>
 
 	<developers>
@@ -33,11 +33,11 @@
             <plugin>
                 <groupId>dev.sassine.api</groupId>
                 <artifactId>sqlschema2java-maven-plugin</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
+                <version>1.0.0-beta1</version>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>sqlschema2java</goal>
+                            <goal>generate</goal>
                         </goals>
                     </execution>
                 </executions>
