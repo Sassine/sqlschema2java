@@ -16,6 +16,7 @@ import org.burningwave.core.classes.ClassSourceGenerator;
 import org.burningwave.core.classes.GenericSourceGenerator;
 import org.burningwave.core.classes.TypeDeclarationSourceGenerator;
 import org.burningwave.core.classes.UnitSourceGenerator;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import dev.sassine.api.structure.export.builder.factory.Factory;
@@ -25,8 +26,6 @@ public class RepositoryFactory implements Factory {
 	
 	private static final Logger log = getLogger();
 	
-	private static final String PACKAGE_JPAREPOSITORY = "org.springframework.data.jpa.repository.JpaRepository";
-	private static final String CLASSNAME_JPAREPOSITORY = "JpaRepository";
 	private static final String DOT_REPOSITORY = ".repository";
 	private static final String ENTITY_REPOSITORY = "EntityRepository";
 	private static final String ENTITY = "Entity";
@@ -39,7 +38,6 @@ public class RepositoryFactory implements Factory {
 		ClassSourceGenerator interfaceClass = this.buildClassSource(entityModel, nameClass);
 		log.debug("InterfaceRepository builded");
 		importEntityClass(nameClass, packageName, gen);
-		gen.addImport(PACKAGE_JPAREPOSITORY);
 		gen.addClass(interfaceClass);
 		store(gen);
 		log.debug("Repository EntityClass ({}) stored", nameClass);
@@ -47,8 +45,8 @@ public class RepositoryFactory implements Factory {
 
 	private ClassSourceGenerator buildClassSource(EntityModel entityModel, String nameClass) {
 		return ClassSourceGenerator
-				.createInterface(TypeDeclarationSourceGenerator.create(ENTITY_REPOSITORY))
-				.expands(TypeDeclarationSourceGenerator.create(CLASSNAME_JPAREPOSITORY)
+				.createInterface(TypeDeclarationSourceGenerator.create(nameClass.concat(ENTITY_REPOSITORY)))
+				.expands(TypeDeclarationSourceGenerator.create(JpaRepository.class)
 						.addGeneric(GenericSourceGenerator.create(nameClass.concat(ENTITY)))
 						.addGeneric(GenericSourceGenerator.create(this.getIdClassType(entityModel))))
 				.addModifier(PUBLIC)
