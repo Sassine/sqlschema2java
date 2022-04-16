@@ -12,11 +12,10 @@ jobs:
     environment:
       name: coveralls
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v2.5.0
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
         with:
-          java-version: 8
-          distribution: 'zulu'
-          architecture: x64
+          java-version: '11'
+          distribution: 'adopt'
       - name: Build and test
         run: cd sqlschema2java-core && mvn clean test jacoco:report coveralls:report -DrepoToken=${{ secrets.coveralls_repo_token }}
