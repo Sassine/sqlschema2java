@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>dev.sasine.api</groupId>
-    <artifactId>sqlschema2java-example</artifactId>
-    <version>1.0.0-beta1</version>
-    <packaging>pom</packaging>
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>dev.sasine.api</groupId>
+	<artifactId>sqlschema2java-example</artifactId>
+	<version>1.0.0-beta1</version>
+	<packaging>pom</packaging>
 
 	<developers>
 		<developer>
@@ -20,35 +20,43 @@
 			</roles>
 		</developer>
 	</developers>
-	
+
 	<properties>
-        <is.postgres>false</is.postgres>
-        <auto.increment.enabled>false</auto.increment.enabled>
-        <path.arquivo>./input.sql</path.arquivo>
-    </properties>
+		<is.postgres>false</is.postgres>
+		<auto.increment.enabled>false</auto.increment.enabled>
+		<path.arquivo>./input.sql</path.arquivo>
+	</properties>
 
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>dev.sassine.api</groupId>
-                <artifactId>sqlschema2java-maven-plugin</artifactId>
-                <version>1.0.0-beta1</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <isPostgres>${is.postgres}</isPostgres>
-                    <sourceDirectory>${path.arquivo}</sourceDirectory>
-                    <useAutoIncrement>${auto.increment.enabled}</useAutoIncrement>
-                    <debugEnabled>false</debugEnabled>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>dev.sassine.api</groupId>
+				<artifactId>sqlschema2java-maven-plugin</artifactId>
+				<version>1.0.0-beta1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<isPostgres>${is.postgres}</isPostgres>
+					<sourceDirectory>${path.arquivo}</sourceDirectory>
+					<useAutoIncrement>${auto.increment.enabled}</useAutoIncrement>
+					<debugEnabled>false</debugEnabled>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>github</id>
+			<name>GitHub Packages SQLSchema2Java</name>
+			<url>https://maven.pkg.github.com/Sassine/sqlschema2java</url>
+		</repository>
+	</repositories>
 
 </project>
