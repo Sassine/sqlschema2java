@@ -19,4 +19,4 @@ jobs:
           distribution: 'zulu'
           architecture: x64
       - name: Build and test
-        run: cd sqlschema2java-core && mvn clean test run-coveralls jacoco:report coveralls:report -DrepoToken=${{ secrets.coveralls_repo_token }}
+        run: cd sqlschema2java-core && mvn clean test jacoco:report coveralls:report -DrepoToken=${{ secrets.coveralls_repo_token }}
