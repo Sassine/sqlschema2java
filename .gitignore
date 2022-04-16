@@ -20,3 +20,4 @@ sqlschema2java-example/src
 sqlschema2java-maven-plugin/.settings/org.eclipse.jdt.core.prefs
 sqlschema2java-maven-plugin/.settings/org.eclipse.m2e.core.prefs
 sqlschema2java-maven-plugin/.settings/org.springframework.ide.eclipse.prefs
+bin/
