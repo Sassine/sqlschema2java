@@ -5,7 +5,7 @@
 [![CodeQL main](https://github.com/Sassine/sqlschema2java/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Sassine/sqlschema2java/actions/workflows/codeql-analysis.yml)
 
 [![GitHub release](https://img.shields.io/github/release/Sassine/sqlschema2java.svg)](https://GitHub.com/Sassine/sqlschema2java/releases/)
-[![Coverage Status](https://coveralls.io/repos/github/Sassine/sqlschema2java/badge.svg?branch=develop)](https://coveralls.io/github/Sassine/sqlschema2java?branch=develop)
+[![Coverage Status](https://coveralls.io/repos/github/Sassine/sqlschema2java/badge.svg)](https://coveralls.io/github/Sassine/sqlschema2java)
 
 ![Logo SQL2JAVA  and website adress sassine.dev/sqlschema2java](https://sassine.dev/assets/images/SQLSchema2Java_Logo2.png)
 

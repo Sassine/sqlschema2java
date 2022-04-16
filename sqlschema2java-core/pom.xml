@@ -157,8 +157,9 @@
 						<exclude>**/*SqlBaseListener*</exclude>
 						<exclude>**/*SqlLexer*</exclude>
 						<exclude>**/*SqlParser*</exclude>
-						<exclude>**/*Main</exclude>
-						<exclude>**/*Sqlschema2Java</exclude>
+						<exclude>**/*Main*</exclude>
+						<exclude>**/*Sqlschema2Java*</exclude>
+						<exclude>**/builder/**</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
@@ -190,7 +191,6 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.18.22</version>
-			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
