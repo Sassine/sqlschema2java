@@ -12,6 +12,10 @@
 
 _sqlschema2java_ generates Java types from SQLSchema and annotate those types for data-binding with Jackson 2.x, Javax Persistence and Spring Repository.
 
+![File SQL -> Funil -> Generate Files DTO, Entity and Repostiory.java](https://sassine.dev/assets/images/funil.png?a=1)
+
+
+
 You can use sqlschema2java as a Maven plugin. 
 [**Try at the sample project exemple**](https://github.com/Sassine/sqlschema2java/tree/main/sqlschema2java-example)
 
