@@ -19,6 +19,7 @@ public class TypeConverter {
 	public static final String TYPE_LOCAL_TIME = "LocalTime";
 
 	public static void convertTypeFromSQLDataBaseToEntityStore(final Database database, boolean isPostgress) {
+		log.debug("Parameters ::: isPostgress: {} ",isPostgress);
 		database.getTables().forEach(table -> {
 			table.getColumnByNames().values().forEach(column -> {
 				column.setConvertedType(convertTypeFromSQLToEntityStore(ofNullable(column.getType()).orElse(""), isPostgress));

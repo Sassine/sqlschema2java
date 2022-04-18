@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>dev.sasine.api</groupId>
 	<artifactId>sqlschema2java-example</artifactId>
-	<version>1.0.0-beta1</version>
+	<version>1.0.0-beta</version>
 	<packaging>pom</packaging>
 
 	<developers>
@@ -22,9 +22,10 @@
 	</developers>
 
 	<properties>
-		<is.postgres>false</is.postgres>
+		<use.postgresDB>false</use.postgresDB>
 		<auto.increment.enabled>false</auto.increment.enabled>
-		<path.arquivo>./input.sql</path.arquivo>
+		<path.sqlFile>./input.sql</path.sqlFile>
+		<packageName>dev.sassine.generated</packageName>
 	</properties>
 
 
@@ -33,7 +34,7 @@
 			<plugin>
 				<groupId>dev.sassine.api</groupId>
 				<artifactId>sqlschema2java-maven-plugin</artifactId>
-				<version>1.0.0-beta1</version>
+				<version>1.0.0-beta</version>
 				<executions>
 					<execution>
 						<goals>
@@ -42,10 +43,10 @@
 					</execution>
 				</executions>
 				<configuration>
-					<isPostgres>${is.postgres}</isPostgres>
-					<sourceDirectory>${path.arquivo}</sourceDirectory>
+					<usePostgreSQL>${use.postgresDB}</usePostgreSQL>
+					<sourceDirectory>${path.sqlFile}</sourceDirectory>
+					<packageName>${packageName}</packageName>
 					<useAutoIncrement>${auto.increment.enabled}</useAutoIncrement>
-					<debugEnabled>false</debugEnabled>
 				</configuration>
 			</plugin>
 		</plugins>
