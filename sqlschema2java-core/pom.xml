@@ -28,7 +28,7 @@
 		<lombok.version>1.18.22</lombok.version>
 		<spring-jpa.version>2.6.6</spring-jpa.version>
 		<commons-text.version>1.9</commons-text.version>
-		<jackson.version>2.13.2</jackson.version>
+		<jackson.version>2.13.2.1</jackson.version>
 		<log4j.version>2.17.2</log4j.version>
 		<junit-4.version>4.13.2</junit-4.version>
 	</properties>
