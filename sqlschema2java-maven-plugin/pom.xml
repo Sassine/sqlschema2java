@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>dev.sassine.api</groupId>
 	<artifactId>sqlschema2java-maven-plugin</artifactId>
-	<version>1.0.0-beta1</version>
+	<version>1.0.0-beta</version>
 	<name>sqlschema2java-maven-plugin</name>
 	<packaging>maven-plugin</packaging>
 
@@ -22,6 +22,18 @@
 			</roles>
 		</developer>
 	</developers>
+
+	<properties>
+		<sqlschema2java-core.version>1.0.0-beta</sqlschema2java-core.version>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven-plugin-api.version>3.6.2</maven-plugin-api.version>
+		<maven-plugin-annotations.version>3.6.0</maven-plugin-annotations.version>
+		<maven-project.version>2.2.1</maven-project.version>
+		<maven-plugin-plugin.version>3.6.0</maven-plugin-plugin.version>
+		<maven-site-plugin.version>3.8.2</maven-site-plugin.version>
+	</properties>
+
 
 	<dependencies>
 		<dependency>
@@ -80,16 +92,6 @@
 		</plugins>
 	</reporting>
 
-	<properties>
-		<sqlschema2java-core.version>1.0.0-beta1</sqlschema2java-core.version>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven-plugin-api.version>3.6.2</maven-plugin-api.version>
-		<maven-plugin-annotations.version>3.6.0</maven-plugin-annotations.version>
-		<maven-project.version>2.2.1</maven-project.version>
-		<maven-plugin-plugin.version>3.6.0</maven-plugin-plugin.version>
-		<maven-site-plugin.version>3.8.2</maven-site-plugin.version>
-	</properties>
 	
 	<distributionManagement>
 		<repository>
