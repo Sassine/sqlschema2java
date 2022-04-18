@@ -28,7 +28,10 @@
 		<lombok.version>1.18.22</lombok.version>
 		<spring-jpa.version>2.6.6</spring-jpa.version>
 		<commons-text.version>1.9</commons-text.version>
-		<jackson.version>2.13.2</jackson.version>
+		<jackson-core.version>2.13.2</jackson-core.version>
+		<jackson-datatype.version>2.13.2</jackson-datatype.version>
+		<jackson-annotations.version>2.13.2</jackson-annotations.version>
+		<jackson-databind.version>2.13.2.2</jackson-databind.version>
 		<log4j.version>2.17.2</log4j.version>
 		<junit-4.version>4.13.2</junit-4.version>
 	</properties>
@@ -254,25 +257,25 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
-			<version>${jackson.version}</version>
+			<version>${jackson-core.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
-			<version>${jackson.version}</version>
+			<version>${jackson-annotations.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>${jackson.version}</version>
+			<version>${jackson-databind.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jsr310</artifactId>
-			<version>${jackson.version}</version>
+			<version>${jackson-datatype.version}</version>
 		</dependency>
 
 		<dependency>
