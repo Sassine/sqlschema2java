@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
-          java-version: '11'
+          java-version: '16'
           distribution: 'adopt'
       - name: Build and test
         run: cd sqlschema2java-core && mvn clean test jacoco:report coveralls:report -DrepoToken=${{ secrets.coveralls_repo_token }}
