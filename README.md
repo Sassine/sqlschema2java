@@ -1,11 +1,12 @@
 # SQLSchema2Java  [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
 
-[![Publish package to GitHub Packages](https://github.com/Sassine/sqlschema2java/actions/workflows/deploy.yml/badge.svg)](https://github.com/Sassine/sqlschema2java/actions/workflows/deploy.yml) 
+[![Coverage Status](https://coveralls.io/repos/github/Sassine/sqlschema2java/badge.svg?branch=main)](https://coveralls.io/github/Sassine/sqlschema2java?branch=main)
 [![CodeQL main](https://github.com/Sassine/sqlschema2java/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Sassine/sqlschema2java/actions/workflows/codeql-analysis.yml)
 
-[![GitHub release](https://img.shields.io/github/release/Sassine/sqlschema2java.svg)](https://GitHub.com/Sassine/sqlschema2java/releases/)
-[![Coverage Status](https://coveralls.io/repos/github/Sassine/sqlschema2java/badge.svg?branch=main)](https://coveralls.io/github/Sassine/sqlschema2java?branch=main)
+![Maven Central](https://img.shields.io/maven-central/v/dev.sassine.api/sqlschema2java-core?color=purple&label=SQLSchema2java%20-%20Core&logo=java&logoColor=red&style=flat-square)
+![Maven Central](https://img.shields.io/maven-central/v/dev.sassine.api/sqlschema2java-maven-plugin?color=purple&label=SQLSchema2java%20-%20Maven-Plugin&logo=java&logoColor=red&style=flat-square)
+
 
 ![Logo SQL2JAVA  and website adress sassine.dev/sqlschema2java](https://sassine.dev/assets/images/SQLSchema2Java_Logo2.png)
 

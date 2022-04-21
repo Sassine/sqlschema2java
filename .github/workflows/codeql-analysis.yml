@@ -13,10 +13,10 @@ name: "CodeQL main"
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, develop ]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ main ]
+    branches: [ main, develop ]
 
 jobs:
   analyze:
@@ -37,6 +37,12 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+
+    - name: Set JDK Version
+      uses: actions/setup-java@v3
+      with:
+        java-version: '16'
+        distribution: 'adopt'
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
