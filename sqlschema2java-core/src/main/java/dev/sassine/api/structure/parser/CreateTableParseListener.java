@@ -1,6 +1,6 @@
 package dev.sassine.api.structure.parser;
 
-import static java.lang.String.format;
+import static dev.sassine.api.structure.util.Util.unformatSqlName;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,12 +29,10 @@ import dev.sassine.api.structure.model.sql.Column;
 import dev.sassine.api.structure.model.sql.Database;
 import dev.sassine.api.structure.model.sql.ForeignKey;
 import dev.sassine.api.structure.model.sql.TableModel;
-import dev.sassine.api.structure.util.Util;
 
 public class CreateTableParseListener extends SqlBaseListener {
 	private static final Logger log = LogManager.getLogger();
 	private static final String AUTOINCREMENT = "AUTOINCREMENT";
-	private static final String FORMAT_COLUMN_TYPE = "%s %s";
 	private final SqlParser sqlParser;
 	private final Database database;
 
@@ -78,7 +76,7 @@ public class CreateTableParseListener extends SqlBaseListener {
 	@Override
 	public void exitTable_name(final Table_nameContext ctx) {
 		if (inCreateTable) {
-			table.setName(Util.unformatSqlName(ctx.getText()));
+			table.setName(unformatSqlName(ctx.getText()));
 		}
 	}
 
@@ -104,7 +102,7 @@ public class CreateTableParseListener extends SqlBaseListener {
 	@Override
 	public void exitColumn_name(final Column_nameContext ctx) {
 		if (inCreateTable && inColumnDef) {
-			column.setName(Util.unformatSqlName(ctx.getText()));
+			column.setName(unformatSqlName(ctx.getText()));
 		}
 	}
 
@@ -122,10 +120,10 @@ public class CreateTableParseListener extends SqlBaseListener {
 	public void exitName(final NameContext ctx) {
 		if (inCreateTable && inColumnDef && inTypeName) {
 			if (column.getType() == null) {
-				column.setType(Util.unformatSqlName(ctx.getText()));
+				column.setType(unformatSqlName(ctx.getText()));
 			} else {
-				String ctxType = !ctx.getText().replace("_", "").equals(AUTOINCREMENT) ? Util.unformatSqlName(ctx.getText()) : "";
-				column.setType(format(FORMAT_COLUMN_TYPE, column.getType(), ctxType)); 
+				String ctxType = !ctx.getText().replace("_", "").equals(AUTOINCREMENT) ? unformatSqlName(ctx.getText()) : "";
+				column.setType("%s %s".formatted(column.getType(), ctxType)); 
 			}
 		}
 	}
@@ -133,7 +131,7 @@ public class CreateTableParseListener extends SqlBaseListener {
 	@Override
 	public void exitColumn_default_value(final Column_default_valueContext ctx) {
 		if (inCreateTable && inColumnDef) {
-			column.setDefaultValue(Util.unformatSqlName(ctx.getText()));
+			column.setDefaultValue(unformatSqlName(ctx.getText()));
 		}
 	}
 
@@ -164,7 +162,7 @@ public class CreateTableParseListener extends SqlBaseListener {
 	@Override
 	public void exitIndexed_column(final Indexed_columnContext ctx) {
 		if (inCreateTable && inTable_constraint_primary_key) {
-			final String columnName = Util.unformatSqlName(ctx.getText());
+			final String columnName = unformatSqlName(ctx.getText());
 			table.getPrimaryKey().getColumnNames().add(columnName);
 		}
 	}
@@ -207,21 +205,21 @@ public class CreateTableParseListener extends SqlBaseListener {
 	@Override
 	public void exitForeign_table(final Foreign_tableContext ctx) {
 		if (inCreateTable) {
-			foreignKey.setTableNameTarget(Util.unformatSqlName(ctx.getText()));
+			foreignKey.setTableNameTarget(unformatSqlName(ctx.getText()));
 		}
 	}
 
 	@Override
 	public void exitFk_origin_column_name(final Fk_origin_column_nameContext ctx) {
 		if (foreignKey != null) {
-			foreignKey.getColumnNameOrigins().add(Util.unformatSqlName(ctx.getText()));
+			foreignKey.getColumnNameOrigins().add(unformatSqlName(ctx.getText()));
 		}
 	}
 
 	@Override
 	public void exitFk_target_column_name(final Fk_target_column_nameContext ctx) {
 		if (inCreateTable) {
-			foreignKey.getColumnNameTargets().add(Util.unformatSqlName(ctx.getText()));
+			foreignKey.getColumnNameTargets().add(unformatSqlName(ctx.getText()));
 		}
 	}
 

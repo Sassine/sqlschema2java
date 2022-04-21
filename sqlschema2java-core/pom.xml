@@ -10,7 +10,37 @@
 	<name>sqlschema2java-core</name>
 
 	<description>Auto generate Class DTO, Entity and Repository from SQL Query. </description>
-	<url>https://sassine.dev/</url>
+	<url>https://github.com/Sassine/sqlschema2java</url>
+
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>https://github.com/Sassine/sqlschema2java/blob/master/LICENSE</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<issueManagement>
+		<system>github.com</system>
+		<url>https://github.com/Sassine/sqlschema2java/issues</url>
+	</issueManagement>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+
+	<scm>
+		<connection>scm:git:git://github.com/Sassine/sqlschema2java.git</connection>
+		<developerConnection>scm:git:ssh://github.com:Sassine/sqlschema2java.git</developerConnection>
+		<url>https://github.com/Sassine/sqlschema2java/tree/main</url>
+	</scm>
 
 	<properties>
 		<java.version>11</java.version>
@@ -22,6 +52,8 @@
 		<pitest.version>1.7.5</pitest.version>
 		<maven-resources.version>3.2.0</maven-resources.version>
 		<maven-compiler>3.10.1</maven-compiler>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
 		<jax.version>2.3.1</jax.version>
 		<logback.version>1.2.11</logback.version>
 		<burningwave.version>12.47.0</burningwave.version>
@@ -34,6 +66,10 @@
 		<jackson-databind.version>2.13.2.2</jackson-databind.version>
 		<log4j.version>2.17.2</log4j.version>
 		<junit-4.version>4.13.2</junit-4.version>
+		<sonatype-nexus.version>1.6.7</sonatype-nexus.version>
+		<maven-source.version>2.2.1</maven-source.version>
+		<maven-javadoc.version>2.9.1</maven-javadoc.version>
+		<maven-gpg-plugin.version>1.5</maven-gpg-plugin.version>
 	</properties>
 
 	<developers>
@@ -76,7 +112,32 @@
 				<directory>${project.basedir}/src/test/resources</directory>
 			</testResource>
 		</testResources>
+
 		<plugins>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>${sonatype-nexus.version}</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${maven-source.version}</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.pitest</groupId>
 				<artifactId>pitest-maven</artifactId>
@@ -127,8 +188,8 @@
 				<version>${maven-compiler}</version>
 				<configuration>
 					<encoding>${project.build.sourceEncoding}</encoding>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -179,8 +240,54 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<detectJavaApiLink>false</detectJavaApiLink>
+					<excludePackageNames>**/*SqlListener*,**/*SqlBaseListener*,**/*SqlLexer*,**/*SqlParser*,**/*Main*</excludePackageNames>
+				</configuration>
+				<version>2.9.1</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+		<profile>
+			<id>release-sign-artifacts</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>${maven-gpg-plugin.version}</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 	<dependencies>
 		<dependency>
@@ -301,12 +408,5 @@
 
 	</dependencies>
 
-	<distributionManagement>
-		<repository>
-			<id>github</id>
-			<name>GitHub Packages</name>
-			<url>https://maven.pkg.github.com/Sassine/sqlschema2java</url>
-		</repository>
-	</distributionManagement>
 
 </project>

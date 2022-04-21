@@ -3,7 +3,6 @@ package dev.sassine.api.structure.export.builder.factory.impl;
 import static dev.sassine.api.structure.export.builder.function.ImportBeanFunction.importEntityClass;
 import static dev.sassine.api.structure.export.builder.function.ImportBeanFunction.importJavaTimeAndJSONDeserialize;
 import static dev.sassine.api.structure.export.builder.function.StoreClassFuncation.store;
-import static java.lang.String.format;
 import static java.lang.reflect.Modifier.PUBLIC;
 import static org.apache.logging.log4j.LogManager.getLogger;
 
@@ -33,12 +32,6 @@ public class DTOFactory implements Factory {
 	private static final String PACKAGE_DTO_NAME = "dto";
 	private static final String METHOD_TO_ENTITY = "toEntity";
 	private static final String METHOD_RETURN_ENTITY = "return entity;";
-	private static final String FORMAT_DTO_CLASSNAME = "%sDTO";
-	private static final String FORMAT_ENTITY_CLASSNAME = "%sEntity";
-	private static final String FORMAT_NEW_ENTITY_METHOD = "%s entity = new %s();";
-	private static final String FORMAT_STRING_FIELDS = "\"%s\"";
-	private static final String FORMAT_PACKAGE_DOT_PACKAGE = "%s.%s";
-	private static final String FORMAT_SET_VALUE = "entity.set%s(this.%s);";
 	private static final String PARAM_VALUE = "value";
 	
 	@Override
@@ -49,9 +42,7 @@ public class DTOFactory implements Factory {
 		ClassSourceGenerator clDTO = this.buildClassSource(nameClass);
 		log.debug("ClassDTO builded");
 		importEntityClass(nameClass, packageName, gen);
-		String nameEntityClass = format(FORMAT_ENTITY_CLASSNAME, nameClass);
-		log.debug("Prepared EntityClassName  ({})",nameEntityClass);
-		FunctionSourceGenerator fm = this.startFunctionMethod(nameEntityClass);
+		FunctionSourceGenerator fm = this.startFunctionMethod("%sEntity".formatted(nameClass));
 		log.debug("Started functionMethod toEntity");
 		log.debug("Prepare generate ({}) fields", entityModel.getFields().size());
 		entityModel.getFields().forEach(fieldModel -> {
@@ -76,7 +67,7 @@ public class DTOFactory implements Factory {
 	}
 
 	private void addFunctionToMethodFunction(FunctionSourceGenerator functionMethodToEntity, FieldModel fieldModel) {
-		functionMethodToEntity.addBodyCodeLine(format(FORMAT_SET_VALUE, fieldModel.getCamelNameUpper(), fieldModel.getCamelName()));
+		functionMethodToEntity.addBodyCodeLine("entity.set%s(this.%s);".formatted(fieldModel.getCamelNameUpper(), fieldModel.getCamelName()));
 	}
 
 	private VariableSourceGenerator buildField(FieldModel fieldModel) {
@@ -84,26 +75,27 @@ public class DTOFactory implements Factory {
 				.create(TypeDeclarationSourceGenerator.create(fieldModel.getType()), fieldModel.getCamelName())
 				.addModifier(Modifier.PRIVATE)
 				.addAnnotation(AnnotationSourceGenerator.create(JsonProperty.class)
-				.addParameter(PARAM_VALUE,VariableSourceGenerator.create(format(FORMAT_STRING_FIELDS, fieldModel.getName()))));
+				.addParameter(PARAM_VALUE,VariableSourceGenerator.create("\"%s\"".formatted(fieldModel.getName()))));
 	}
 
 	private FunctionSourceGenerator startFunctionMethod(String nameEntityClass) {
+		log.debug("Prepared EntityClassName  ({})",nameEntityClass);
 		return FunctionSourceGenerator
 				.create(METHOD_TO_ENTITY)
 				.addModifier(PUBLIC).setReturnType(nameEntityClass)
-				.addBodyCodeLine(format(FORMAT_NEW_ENTITY_METHOD, nameEntityClass, nameEntityClass));
+				.addBodyCodeLine("%s entity = new %s();".formatted(nameEntityClass, nameEntityClass));
 	}
 
 	private ClassSourceGenerator buildClassSource(String nameClass) {
 		return ClassSourceGenerator
-				.create(TypeDeclarationSourceGenerator.create(format(FORMAT_DTO_CLASSNAME, nameClass)))
+				.create(TypeDeclarationSourceGenerator.create("%sDTO".formatted(nameClass)))
 				.addModifier(PUBLIC).addAnnotation(AnnotationSourceGenerator.create(Getter.class))
 				.addAnnotation(AnnotationSourceGenerator.create(Setter.class))
 				.addAnnotation(AnnotationSourceGenerator.create(NoArgsConstructor.class));
 	}
 
 	private UnitSourceGenerator buildPackage(String packageName) {
-		return UnitSourceGenerator.create(format(FORMAT_PACKAGE_DOT_PACKAGE, packageName, PACKAGE_DTO_NAME));
+		return UnitSourceGenerator.create("%s.%s".formatted(packageName, PACKAGE_DTO_NAME));
 	}
 
 }

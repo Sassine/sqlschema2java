@@ -14,7 +14,7 @@ public class EntityModel {
 	private String pkPolicy;
 	private String pkType;
 
-	private List<FieldModel> fields = new ArrayList<FieldModel>();
+	private List<FieldModel> fields = new ArrayList<>();
 
 	public FieldModel getFieldForName(final String name) {
 		return fields.stream().filter(field -> field.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
