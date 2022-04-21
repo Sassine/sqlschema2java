@@ -1,6 +1,5 @@
 package dev.sassine.api.maven.plugin.start;
 import static dev.sassine.api.structure.Sqlschema2Java.generate;
-import static java.lang.String.format;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -32,7 +31,7 @@ public class SqlSchema2Java extends AbstractMojo {
    
     
     public void execute() throws MojoExecutionException, MojoFailureException {
-        getLog().info(format(" packageName %s - sourceDirectory %s - isPostgres %s - useAutoIncrement %s", sourceDirectory, packageName, usePostgreSQL, useAutoIncrement));
+        getLog().info(" packageName %s - sourceDirectory %s - isPostgres %s - useAutoIncrement %s".formatted(sourceDirectory, packageName, usePostgreSQL, useAutoIncrement));
         generate(EnvironmentModel.builder()
         		.sourceDirectory(sourceDirectory)
         		.packageName(packageName)

@@ -10,8 +10,8 @@ import lombok.Setter;
 @Setter
 public class ForeignKey {
 
-	private List<String> columnNameOrigins = new ArrayList<String>();
-	private List<String> columnNameTargets = new ArrayList<String>();
+	private List<String> columnNameOrigins = new ArrayList<>();
+	private List<String> columnNameTargets = new ArrayList<>();
 	private String tableNameOrigin;
 	private String tableNameTarget;
 

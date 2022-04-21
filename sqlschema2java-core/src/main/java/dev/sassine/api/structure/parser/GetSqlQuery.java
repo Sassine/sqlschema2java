@@ -27,7 +27,7 @@ public class GetSqlQuery {
 	}
 
 	public List<String> getSqlQuerys(final String content) {
-		final List<String> querys = new ArrayList<String>();
+		final List<String> querys = new ArrayList<>();
 
 		int posStart = getPosStartQuery(content, 0);
 		int posEnd = getPosEndQuery(content, posStart);
