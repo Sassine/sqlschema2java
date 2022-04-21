@@ -13,9 +13,9 @@ import lombok.Setter;
 public class TableModel {
 
 	private String name;
-	private Map<String,Column> columnByNames = new HashMap<String,Column>();
+	private Map<String,Column> columnByNames = new HashMap<>();
 	private PrimaryKey primaryKey = new PrimaryKey();
-	private List<ForeignKey> foreignKeys = new ArrayList<ForeignKey>();
+	private List<ForeignKey> foreignKeys = new ArrayList<>();
 
 	public ForeignKey getForeignKeyForColumnNameOrigin(final Column column) {
 		for (ForeignKey fk : foreignKeys) {	

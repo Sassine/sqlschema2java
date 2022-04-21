@@ -8,6 +8,6 @@ import lombok.Getter;
 @Getter
 public class PrimaryKey {
 
-	List<String> columnNames = new ArrayList<String>();
+	List<String> columnNames = new ArrayList<>();
 
 }

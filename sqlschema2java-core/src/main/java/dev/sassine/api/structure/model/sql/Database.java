@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 public class Database {
 
-	private List<TableModel> tables = new ArrayList<TableModel>();
+	private List<TableModel> tables = new ArrayList<>();
 
 	public TableModel getTableForName(final String tableName) {
 		return tables.stream().filter(table -> table.getName().equalsIgnoreCase(tableName)).findAny().orElse(null);
