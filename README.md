@@ -40,10 +40,10 @@ pom.xml
                     </execution>
                 </executions>
                 <configuration>
-                    <sourceDirectory>/user/home/example.sql</sourceDirectory>
+                    <sourceDirectory>./example.sql</sourceDirectory>
                     <packageName>dev.sassine.api</packageName>
                     <useAutoIncrement>true</useAutoIncrement>
-                    <isPostgres>false</isPostgres>
+                    <usePostgreSQL>false</isPostgres>
                 </configuration>
             </plugin>
 </plugins>
@@ -56,7 +56,7 @@ pom.xml
 | sourceDirectory  | true | String | SQL file path |
 | packageName | true | String | package name with points that will be generated |
 | useAutoIncrement| false | Boolean| disable or enable whether the primary key will have its value generated automatically |
-| isPostgres| true | Boolean | disable or enable query conversion compatible with postgres database |
+| usePostgreSQL | true | Boolean | disable or enable query conversion compatible with postgres database |
 
 
 #####  Run command 
