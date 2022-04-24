@@ -43,7 +43,7 @@ pom.xml
                     <sourceDirectory>./example.sql</sourceDirectory>
                     <packageName>dev.sassine.api</packageName>
                     <useAutoIncrement>true</useAutoIncrement>
-                    <usePostgreSQL>false</isPostgres>
+                    <usePostgreSQL>false</usePostgreSQL>
                 </configuration>
             </plugin>
 </plugins>
