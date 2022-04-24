@@ -31,7 +31,7 @@ pom.xml
             <plugin>
                 <groupId>dev.sassine.api</groupId>
                 <artifactId>sqlschema2java-maven-plugin</artifactId>
-                <version>1.0.0</version>
+                <version>1.0.0-beta</version>
                 <executions>
                     <execution>
                         <goals>
@@ -48,13 +48,7 @@ pom.xml
             </plugin>
 </plugins>
 
-<repositories>
-	<repository>
-		<id>github</id>
-		<name>GitHub Packages SQLSchema2Java</name>
-		<url>https://maven.pkg.github.com/Sassine/sqlschema2java</url>
-	</repository>
-</repositories>
+
 ```
 ###  Parameters
 | Name | required |  type | description |
