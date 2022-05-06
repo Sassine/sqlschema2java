@@ -35,7 +35,7 @@ pom.xml
                 <executions>
                     <execution>
                         <goals>
-                            <goal>sqlschema2java</goal>
+                            <goal>generate</goal>
                         </goals>
                     </execution>
                 </executions>
