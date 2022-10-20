@@ -63,7 +63,7 @@
 		<jackson-core.version>2.13.2</jackson-core.version>
 		<jackson-datatype.version>2.13.2</jackson-datatype.version>
 		<jackson-annotations.version>2.13.2</jackson-annotations.version>
-		<jackson-databind.version>2.13.2.2</jackson-databind.version>
+		<jackson-databind.version>2.13.4.1</jackson-databind.version>
 		<log4j.version>2.17.2</log4j.version>
 		<junit-4.version>4.13.2</junit-4.version>
 		<sonatype-nexus.version>1.6.7</sonatype-nexus.version>
