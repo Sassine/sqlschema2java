@@ -59,7 +59,7 @@
 		<burningwave.version>12.47.0</burningwave.version>
 		<lombok.version>1.18.22</lombok.version>
 		<spring-jpa.version>2.6.6</spring-jpa.version>
-		<commons-text.version>1.9</commons-text.version>
+		<commons-text.version>1.10.0</commons-text.version>
 		<jackson-core.version>2.13.2</jackson-core.version>
 		<jackson-datatype.version>2.13.2</jackson-datatype.version>
 		<jackson-annotations.version>2.13.2</jackson-annotations.version>
